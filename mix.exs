@@ -42,7 +42,14 @@ defmodule Trivium.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:httpoison, "~> 1.6"},
+      {:polyline, "~> 1.2"},
+      {:distillery, "~> 2.1"},
+      {:gen_stage, "~> 0.14.2"},
+      {:flow, "~> 0.14.3"},
+      {:ex_rated, "~> 1.3"},
+      {:pow, "~> 1.0.13"}
     ]
   end
 
