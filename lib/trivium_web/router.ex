@@ -1,5 +1,6 @@
 defmodule TriviumWeb.Router do
   use TriviumWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -7,6 +8,11 @@ defmodule TriviumWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+  end
+
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
   end
 
   pipeline :api do
@@ -17,6 +23,17 @@ defmodule TriviumWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/register" do
+    pipe_through :browser
+
+    pow_routes()
+  end
+
+  scope "/protected", TriviumWeb do
+    pipe_through [:browser, :protected]
+    get "/hi", PageController, :index
   end
 
   # Other scopes may use custom stacks.
