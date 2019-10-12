@@ -1,6 +1,7 @@
 defmodule TriviumWeb.Router do
   use TriviumWeb, :router
   use Pow.Phoenix.Router
+  use Pow.Extension.Phoenix.Router, otp_app: :trivium
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -29,15 +30,24 @@ defmodule TriviumWeb.Router do
     pipe_through :browser
 
     pow_routes()
+    pow_extension_routes()
+
   end
 
-  scope "/protected", TriviumWeb do
+  scope "/", TriviumWeb do
     pipe_through [:browser, :protected]
-    get "/hi", PageController, :index
+    get "/dashboard", PageController, :dashboard
+    get "/test", PageController, :dashboard
+    # Dashboard get "/dashboard", DashboardController, :index
+
+    # User Preferences
   end
 
   # Other scopes may use custom stacks.
   # scope "/api", TriviumWeb do
   #   pipe_through :api
+  # https://github.com/danschultzer/pow/blob/master/guides/api.md
+  # :crypto.hmac(:sha, "secret", "data") |> Base.encode16(case: :lower)
+  
   # end
 end

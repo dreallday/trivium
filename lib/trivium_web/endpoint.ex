@@ -42,6 +42,11 @@ defmodule TriviumWeb.Endpoint do
     key: "_trivium_key",
     signing_salt: "MKN73jll"
 
-  plug TriviumWeb.Pow.Plug, otp_app: :trivium
+  plug Pow.Plug.Session, otp_app: :trivium
+  plug PowPersistentSession.Plug.Cookie
+
+  # API?
+  # plug TriviumWeb.Pow.Plug.Token, otp_app: :trivium
+
   plug TriviumWeb.Router
 end
