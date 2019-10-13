@@ -1,0 +1,13 @@
+<h1>Show Tokens</h1>
+
+<ul>
+
+  <li>
+    <strong>Token:</strong>
+    <%= @tokens.token %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.tokens_path(@conn, :edit, @tokens) %></span>
+<span><%= link "Back", to: Routes.tokens_path(@conn, :index) %></span>

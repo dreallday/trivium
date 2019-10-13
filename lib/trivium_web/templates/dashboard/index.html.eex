@@ -1,0 +1,15 @@
+<h1>Dashboard</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>
+        <span><%= @dashboard["sup"] %></span>
+        <span><%= link "Tokens", to: Routes.tokens_path(@conn, :index) %></span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+

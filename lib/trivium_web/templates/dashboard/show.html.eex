@@ -1,0 +1,8 @@
+<h1>Show Dashboard</h1>
+
+<ul>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.dashboard_path(@conn, :edit, @dashboard) %></span>
+<span><%= link "Back", to: Routes.dashboard_path(@conn, :index) %></span>

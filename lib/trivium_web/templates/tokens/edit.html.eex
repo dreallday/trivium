@@ -1,0 +1,5 @@
+<h1>Edit Tokens</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.tokens_path(@conn, :update, @tokens)) %>
+
+<span><%= link "Back", to: Routes.tokens_path(@conn, :index) %></span>

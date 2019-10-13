@@ -49,7 +49,9 @@ defmodule Trivium.MixProject do
       {:gen_stage, "~> 0.14.2"},
       {:flow, "~> 0.14.3"},
       {:ex_rated, "~> 1.3"},
-      {:pow, "~> 1.0.13"}
+      {:pow, "~> 1.0.13"},
+      {:phoenix_live_view, "~> 0.3.1"},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 

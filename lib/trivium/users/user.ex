@@ -5,9 +5,11 @@ defmodule Trivium.Users.User do
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
+  alias Trivium.Private.Token
+
   schema "users" do
     pow_user_fields()
-
+    has_many(:tokens, Token)
     timestamps()
   end
 
@@ -17,3 +19,6 @@ defmodule Trivium.Users.User do
     |> pow_extension_changeset(attrs)
   end
 end
+
+
+# Repo.all(from(u in User, where: u.id == 1, preload: :tokens))

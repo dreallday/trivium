@@ -1,0 +1,5 @@
+<h1>Edit Dashboard</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.dashboard_path(@conn, :update, @dashboard)) %>
+
+<span><%= link "Back", to: Routes.dashboard_path(@conn, :index) %></span>

@@ -31,13 +31,13 @@ defmodule TriviumWeb.Router do
 
     pow_routes()
     pow_extension_routes()
-
   end
 
   scope "/", TriviumWeb do
     pipe_through [:browser, :protected]
-    get "/dashboard", PageController, :dashboard
-    get "/test", PageController, :dashboard
+    get "/dashboard", DashboardController, :index
+
+    resources "/tokens", TokensController, only: [:index, :new, :create, :update, :delete]
     # Dashboard get "/dashboard", DashboardController, :index
 
     # User Preferences
@@ -48,6 +48,6 @@ defmodule TriviumWeb.Router do
   #   pipe_through :api
   # https://github.com/danschultzer/pow/blob/master/guides/api.md
   # :crypto.hmac(:sha, "secret", "data") |> Base.encode16(case: :lower)
-  
+
   # end
 end
