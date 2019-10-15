@@ -3,13 +3,50 @@
 <table>
   <thead>
     <tr>
-      <th>
-        <span><%= @dashboard["sup"] %></span>
-        <span><%= link "Tokens", to: Routes.tokens_path(@conn, :index) %></span>
-      </th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>
+        <span><%= "Name Goes Here" %></span>
+      </td>
+      <td>
+        <span><%= @user.email %></span>
+      </td>
+      <td>
+        <span><%= "••••••••" %></span>
+      </td>
+      <td>
+        <span>Edit</span>
+      </td>
+    </tr>
   </tbody>
 </table>
 
+<span><%= link "????", to: Routes.tokens_path(@conn, :create), method: :create %></span>
+
+<table>
+  <thead>
+    <tr>
+      <th>API Keys</th>
+      <th></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <%= for tokens <- @tokens do %>
+        <tr>
+          <td><%= tokens.token %></td>
+          <td>
+            <span><%= link "Delete", to: Routes.tokens_path(@conn, :delete, tokens), method: :delete, data: [confirm: "Are you sure?"] %></span>
+          </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= link "Add a new API key", to: Routes.tokens_path(@conn, :create), method: :create %></span>

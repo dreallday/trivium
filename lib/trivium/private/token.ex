@@ -7,7 +7,8 @@ defmodule Trivium.Private.Token do
   schema "tokens" do
     field :token, :string
     field :label, :string
-    belongs_to(:user, User)
+    field :deleted_at, :naive_datetime
+    belongs_to(:user, User, type: :binary_id)
 
     timestamps()
   end
@@ -15,7 +16,17 @@ defmodule Trivium.Private.Token do
   @doc false
   def changeset(token, attrs) do
     token
-    |> cast(attrs, [:token, :user_id, :label])
+    |> cast(attrs, [:user_id, :label, :deleted_at])
     |> validate_required([:token, :user_id])
+  end
+
+  def delete(token) do
+    attrs = %{
+      deleted_at: DateTime.utc_now()
+    }
+
+    token
+    |> cast(attrs, [:deleted_at])
+    |> validate_required([:token, :user_id, :deleted_at])
   end
 end

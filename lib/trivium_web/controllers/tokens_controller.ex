@@ -5,7 +5,7 @@ defmodule TriviumWeb.TokensController do
   alias Trivium.Private.Token
 
   def index(conn, _params) do
-    tokens = Private.list_tokens(conn) |> IO.inspect(label: "tokensss")
+    tokens = Private.list_tokens(conn)
     render(conn, "index.html", tokens: tokens)
   end
 

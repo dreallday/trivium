@@ -7,7 +7,10 @@ defmodule Trivium.Users.User do
 
   alias Trivium.Private.Token
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+
   schema "users" do
+    field :name, :string
     pow_user_fields()
     has_many(:tokens, Token)
     timestamps()

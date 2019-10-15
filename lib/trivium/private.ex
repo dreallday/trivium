@@ -16,9 +16,14 @@ defmodule Trivium.Private do
       [%Token{}, ...]
 
   """
-  def list_tokens(conn \\ nil) do
-    user = conn |> Pow.Plug.current_user()
-    Repo.all(Token, user_id: user.id)
+  def list_tokens(conn) do
+    user = Pow.Plug.current_user(conn)
+    #   from(r in Resource, preload: [foo: ^not_deleted(Foo), bar: ^not_deleted(Bar)])
+    # |> Repo.all()
+
+    from(t in Token, where: [user_id: ^user.id])
+    |> not_deleted()
+    |> Repo.all()
   end
 
   @doc """
@@ -50,7 +55,7 @@ defmodule Trivium.Private do
 
   """
   def create_token(conn, attrs \\ %{}) do
-    user = conn |> Pow.Plug.current_user()
+    user = conn |> Pow.Plug.current_user() |> IO.inspect(label: "create_token user")
 
     %Token{
       user_id: user.id,
@@ -98,7 +103,9 @@ defmodule Trivium.Private do
 
   """
   def delete_token(%Token{} = token) do
-    Repo.delete(token)
+    token
+    |> Token.delete()
+    |> Repo.update()
   end
 
   @doc """
@@ -112,5 +119,9 @@ defmodule Trivium.Private do
   """
   def change_token(%Token{} = token) do
     Token.changeset(token, %{})
+  end
+
+  defp not_deleted(query) do
+    from(q in query, where: is_nil(q.deleted_at))
   end
 end

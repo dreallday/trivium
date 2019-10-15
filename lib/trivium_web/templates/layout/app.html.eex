@@ -12,6 +12,7 @@
       <section class="container">
         <nav role="navigation">
           <%= if Pow.Plug.current_user(@conn) do %>
+            <ul><li><%= link "Dashboard", to: Routes.dashboard_path(@conn, :index) %></li></ul>
             <ul><li><%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></li></ul>
           <% else %>
             <ul><li><%= link "Register", to: Routes.pow_registration_path(@conn, :new) %></li></ul>

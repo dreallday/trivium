@@ -37,7 +37,7 @@ defmodule TriviumWeb.Router do
     pipe_through [:browser, :protected]
     get "/dashboard", DashboardController, :index
 
-    resources "/tokens", TokensController, only: [:index, :new, :create, :update, :delete]
+    resources "/key", TokensController, only: [:index, :create, :update, :delete]
     # Dashboard get "/dashboard", DashboardController, :index
 
     # User Preferences
