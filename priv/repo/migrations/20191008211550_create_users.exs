@@ -4,7 +4,7 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
   def change do
     create table(:users, primary_key: false) do
       add(:id, :binary_id, primary_key: true)
-      add(:name, :string, null: false)
+      add(:name, :string)
       add(:email, :string, null: false)
       add(:password_hash, :string)
       add(:email_confirmation_token, :string)

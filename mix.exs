@@ -51,7 +51,9 @@ defmodule Trivium.MixProject do
       {:ex_rated, "~> 1.3"},
       {:pow, "~> 1.0.13"},
       {:phoenix_live_view, "~> 0.3.1"},
-      {:floki, ">= 0.0.0", only: :test}
+      {:floki, ">= 0.0.0", only: :test},
+      {:nebulex, "~> 1.1"},
+      {:stripity_stripe, "~> 2.7"}
     ]
   end
 

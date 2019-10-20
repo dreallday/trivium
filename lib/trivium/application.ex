@@ -11,7 +11,9 @@ defmodule Trivium.Application do
       # Start the Ecto repository
       Trivium.Repo,
       # Start the endpoint when the application starts
-      TriviumWeb.Endpoint
+      TriviumWeb.Endpoint,
+      {Trivium.Verify, [[name: Trivium.Verify]]},
+      {Trivium.Cache, []}
       # Starts a worker by calling: Trivium.Worker.start_link(arg)
       # {Trivium.Worker, arg},
     ]

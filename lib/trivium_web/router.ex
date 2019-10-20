@@ -18,6 +18,7 @@ defmodule TriviumWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Trivium.Plug.VerifyRequest
   end
 
   scope "/", TriviumWeb do
@@ -43,11 +44,12 @@ defmodule TriviumWeb.Router do
     # User Preferences
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", TriviumWeb do
-  #   pipe_through :api
-  # https://github.com/danschultzer/pow/blob/master/guides/api.md
-  # :crypto.hmac(:sha, "secret", "data") |> Base.encode16(case: :lower)
-
-  # end
+  scope "/api", TriviumWeb do
+    pipe_through :api
+    # https://github.com/danschultzer/pow/blob/master/guides/api.md
+    # :crypto.hmac(:sha, "secret", "data") |> Base.encode16(case: :lower)
+    scope "/v1" do
+      get "/test", ApiController, :test
+    end
+  end
 end
