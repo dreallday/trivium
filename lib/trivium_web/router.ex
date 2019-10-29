@@ -45,10 +45,14 @@ defmodule TriviumWeb.Router do
   end
 
   scope "/api", TriviumWeb do
-    pipe_through :api
+    scope "/v0" do
+      resources "/interest", UserController, only: [:create]
+    end
+
     # https://github.com/danschultzer/pow/blob/master/guides/api.md
     # :crypto.hmac(:sha, "secret", "data") |> Base.encode16(case: :lower)
     scope "/v1" do
+      pipe_through :api
       get "/test", ApiController, :test
     end
   end
