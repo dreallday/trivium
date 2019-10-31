@@ -20,7 +20,7 @@ defmodule Trivium.MixProject do
   def application do
     [
       mod: {Trivium.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ex_rated]
     ]
   end
 

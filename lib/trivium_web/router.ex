@@ -18,6 +18,7 @@ defmodule TriviumWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    # plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
     plug Trivium.Plug.VerifyRequest
   end
 
@@ -54,6 +55,8 @@ defmodule TriviumWeb.Router do
     scope "/v1" do
       pipe_through :api
       get "/test", ApiController, :test
+      get "/snap", ApiController, :snap_to_road
+      post "/snap", ApiController, :snap_to_road
     end
   end
 end

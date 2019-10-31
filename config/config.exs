@@ -8,7 +8,7 @@
 use Mix.Config
 
 config :trivium,
-  ecto_repos: [Trivium.Repo]
+  ecto_repos: [Trivium.Repo, Trivium.PostGIS.Repo]
 
 # Configures the endpoint
 config :trivium, TriviumWeb.Endpoint,

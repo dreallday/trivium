@@ -27,6 +27,6 @@ defmodule Trivium.Private.Token do
 
     token
     |> cast(attrs, [:deleted_at])
-    |> validate_required([:token, :user_id, :deleted_at])
+    |> validate_required([:token, :deleted_at])
   end
 end

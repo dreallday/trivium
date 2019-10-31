@@ -10,10 +10,12 @@ defmodule Trivium.Application do
     children = [
       # Start the Ecto repository
       Trivium.Repo,
+      Trivium.PostGIS.Repo,
       # Start the endpoint when the application starts
       TriviumWeb.Endpoint,
       {Trivium.Verify, [[name: Trivium.Verify]]},
-      {Trivium.Cache, []}
+      {Trivium.Cache, []},
+      {Trivium.GenServer.Tracker, []}
       # Starts a worker by calling: Trivium.Worker.start_link(arg)
       # {Trivium.Worker, arg},
     ]
