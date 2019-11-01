@@ -16,5 +16,12 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
 
     create(unique_index(:users, [:email]))
     create(unique_index(:users, [:email_confirmation_token]))
+
+    create table(:landing) do
+      add(:name, :string)
+      add(:email, :string)
+
+      timestamps()
+    end
   end
 end

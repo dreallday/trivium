@@ -5,8 +5,11 @@ defmodule TriviumWeb.TokensController do
   alias Trivium.Private.Token
 
   def index(conn, _params) do
-    tokens = Private.list_tokens(conn)
-    render(conn, "index.html", tokens: tokens)
+    conn
+    |> redirect(to: Routes.dashboard_path(conn, :index))
+
+    # tokens = Private.list_tokens(conn)
+    # render(conn, "index.html", tokens: tokens)
   end
 
   def new(conn, _params) do
@@ -19,10 +22,19 @@ defmodule TriviumWeb.TokensController do
       {:ok, tokens} ->
         conn
         |> put_flash(:info, "Token #{tokens.token} created successfully.")
-        |> redirect(to: Routes.tokens_path(conn, :index, Private.list_tokens(conn)))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
+
+      # , Private.list_tokens(conn)
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "index.html", changeset: changeset)
+
+      {:token_error, error} ->
+        conn
+        |> put_flash(:error, "#{error}")
+        |> redirect(to: Routes.dashboard_path(conn, :index))
+
+        # |> redirect(to: Routes.tokens_path(conn, :index, Private.list_tokens(conn)))
     end
   end
 
@@ -44,7 +56,8 @@ defmodule TriviumWeb.TokensController do
       {:ok, tokens} ->
         conn
         |> put_flash(:info, "Token updated successfully.")
-        |> redirect(to: Routes.tokens_path(conn, :index, tokens))
+        # |> redirect(to: Routes.tokens_path(conn, :index, tokens))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", tokens: tokens, changeset: changeset)
@@ -57,6 +70,7 @@ defmodule TriviumWeb.TokensController do
 
     conn
     |> put_flash(:info, "Token deleted successfully.")
-    |> redirect(to: Routes.tokens_path(conn, :index))
+    # |> redirect(to: Routes.tokens_path(conn, :index))
+    |> redirect(to: Routes.dashboard_path(conn, :index))
   end
 end

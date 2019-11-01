@@ -26,6 +26,14 @@ defmodule Trivium.Private do
     |> Repo.all()
   end
 
+  def list_token_number(conn) do
+    user = Pow.Plug.current_user(conn)
+
+    from(t in Token, where: [user_id: ^user.id], select: count(t.id))
+    |> not_deleted()
+    |> Repo.one()
+  end
+
   @doc """
   Gets a single token.
 
@@ -55,21 +63,45 @@ defmodule Trivium.Private do
 
   """
   def create_token(conn, attrs \\ %{}) do
-    user = conn |> Pow.Plug.current_user() |> IO.inspect(label: "create_token user")
+    user =
+      conn
+      |> Pow.Plug.current_user()
+      |> IO.inspect(label: "create_token user")
 
-    %Token{
-      user_id: user.id,
-      token:
-        :crypto.hmac(
-          :sha,
-          "herpaderp",
-          :crypto.strong_rand_bytes(6) |> Base.encode16(case: :lower)
-        )
-        |> Base.encode16(case: :lower)
-    }
-    |> IO.inspect(label: "about to create token")
-    |> Token.changeset(attrs)
-    |> Repo.insert()
+    # user.token_limit 
+    # |> IO.inspect(label: "create_token user")
+    used_tokens = list_token_number(conn)
+    # |> IO.inspect(label: "create_token list_tokens")
+    available_tokens = user.token_limit - used_tokens
+    # |> IO.inspect(label: "create_token user")
+
+    cond do
+      available_tokens > 0 ->
+        # available_tokens |> IO.inspect(label: "> 0")
+
+        %Token{
+          user_id: user.id,
+          token:
+            :crypto.hmac(
+              :sha,
+              "herpaderp",
+              :crypto.strong_rand_bytes(6) |> Base.encode16(case: :lower)
+            )
+            |> Base.encode16(case: :lower)
+        }
+        |> Token.changeset(attrs)
+        |> Repo.insert()
+
+      available_tokens == 0 ->
+        # available_tokens |> IO.inspect(label: " = 0")
+        {:token_error, "#{used_tokens}/#{user.token_limit} tokens used, can't create any more"}
+
+      true ->
+        available_tokens |> IO.inspect(label: "hax")
+        {:token_error, "Hax"}
+    end
+
+    # |> IO.inspect(label: "about to create token")
   end
 
   @doc """

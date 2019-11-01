@@ -13,6 +13,8 @@ defmodule Trivium.Users.User do
     field :name, :string
     pow_user_fields()
     has_many(:tokens, Token)
+    field :token_limit, :integer
+
     timestamps()
   end
 
@@ -22,6 +24,5 @@ defmodule Trivium.Users.User do
     |> pow_extension_changeset(attrs)
   end
 end
-
 
 # Repo.all(from(u in User, where: u.id == 1, preload: :tokens))

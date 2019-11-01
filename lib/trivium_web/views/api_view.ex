@@ -52,6 +52,8 @@ defmodule TriviumWeb.ApiView do
     }
   end
 
-  defp get_speed_limit(speedlimit) when not is_nil(speedlimit) do
+  def render("error.json", error) do
+    error |> IO.inspect(label: "api view error")
+    %{}
   end
 end

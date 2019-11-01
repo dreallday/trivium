@@ -61,8 +61,8 @@ defmodule Trivium.PostGIS do
       {:ok, result} ->
         {:ok, DBUtils.result_to_map_list(result)}
 
-      {:error, _} ->
-        {:error, "dunno"}
+      {:error, error} ->
+        {:error, error}
     end
   end
 
