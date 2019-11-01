@@ -57,6 +57,8 @@ defmodule TriviumWeb.Router do
       get "/test", ApiController, :test
       get "/snap", ApiController, :snap_to_road
       post "/snap", ApiController, :snap_to_road
+      get "/speed", ApiController, :get_speed_limit
+      post "/speed", ApiController, :get_speed_limit
     end
   end
 end

@@ -10,7 +10,7 @@ defmodule TriviumWeb.ApiController do
   def snap_to_road(conn, params) do
     # params |> IO.inspect(label: "snap params")
 
-    snapped = PostGIS.snap_to_road(params)
+    {:ok, snapped} = PostGIS.snap_to_road(params)
     #  |> IO.inspect(label: "snap results")
 
     # snapped = %{
@@ -20,5 +20,11 @@ defmodule TriviumWeb.ApiController do
 
     render(conn, "snapped_points.json", points: snapped)
     # send_resp(conn, 200, Ecto.UUID.generate())
+  end
+
+  def get_speed_limit(conn, params) do
+    {:ok, speedlimits} = PostGIS.get_speed_limit(params)
+    # |> IO.inspect(label: "get_speed_limit")
+    render(conn, "speed_limits.json", points: speedlimits)
   end
 end

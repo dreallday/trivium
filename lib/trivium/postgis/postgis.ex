@@ -18,16 +18,48 @@ defmodule Trivium.PostGIS do
   # LIMIT 1;
 
   def snap_to_road(map) do
-    # map["lat"]
-    # map["lon"]
     query =
-      "SELECT ST_X (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS longitude, ST_Y (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS latitude, ST_DistanceSphere(ST_ClosestPoint(ST_Transform (r.way, 4326), point.way), point.way) AS distance FROM planet_osm_line AS r, (SELECT ST_SetSRID(ST_Point('#{map["lon"]}','#{map["lat"]}'), 4326) AS way) AS point ORDER BY 3 ASC LIMIT 1;"
+      "SELECT ST_X (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS longitude, ST_Y (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS latitude, ST_DistanceSphere(ST_ClosestPoint(ST_Transform (r.way, 4326), point.way), point.way) AS distance FROM planet_osm_line AS r, (SELECT ST_SetSRID(ST_Point('#{
+        map["lon"]
+      }','#{map["lat"]}'), 4326) AS way) AS point ORDER BY 3 ASC LIMIT 1;"
 
     case Repo.query(query) do
       # {:ok, %Postgrex.Result{columns: columns, rows: rows}} ->
       #   [row | rows] = rows
       {:ok, result} ->
-        DBUtils.result_to_map_list(result)
+        {:ok, DBUtils.result_to_map_list(result)}
+
+      {:error, _} ->
+        {:error, "dunno"}
+    end
+  end
+
+  def get_speed_limit(map) do
+    latitude = map["lat"]
+    longitude = map["lon"]
+    limit = 1 || map["limit"] || 1
+    query = "SELECT
+    ST_DistanceSphere(ST_ClosestPoint(ST_Transform (r.way, 4326), point.way), point.way) AS distance,
+    ST_X (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS longitude,
+    ST_Y (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS latitude,
+    r.tags->'maxspeed' AS maxspeed,
+    r.tags->'maxspeed:advisory' AS maxspeed_advisory,
+    r.name,
+    r.ref,
+    r.tags,
+    r.highway AS type,
+    r.osm_id AS id
+    FROM
+    planet_osm_line AS r,
+    (SELECT ST_SetSRID(ST_Point('#{longitude}','#{latitude}'), 4326) AS way) AS point
+    WHERE r.highway IS NOT NULL
+    AND r.highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link', 'living_street', 'service', 'pedestrian', 'road') 
+    ORDER BY 1 ASC
+    LIMIT #{limit};"
+
+    case Repo.query(query) do
+      {:ok, result} ->
+        {:ok, DBUtils.result_to_map_list(result)}
 
       {:error, _} ->
         {:error, "dunno"}
