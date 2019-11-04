@@ -6,6 +6,8 @@ defmodule Trivium.Plug.RateLimit do
   # def call(conn, options), do: rate_limit(conn, options)
 
   def call(conn, options \\ []) do
+    # bucket_name(conn) |> IO.inspect(label: "bucket_name")
+
     case check_rate(conn, options) do
       # Do nothing, allow execution to continue
       {:ok, _count} -> conn
@@ -17,6 +19,7 @@ defmodule Trivium.Plug.RateLimit do
     interval_milliseconds = options[:interval_seconds] * 1000
     max_requests = options[:max_requests]
     ExRated.check_rate(bucket_name(conn), interval_milliseconds, max_requests)
+    # ExRated.check_rate(conn.params["key"], interval_milliseconds, max_requests)
   end
 
   # Bucket name should be a combination of ip address and request path, like so:
@@ -25,13 +28,13 @@ defmodule Trivium.Plug.RateLimit do
   defp bucket_name(conn) do
     path = Enum.join(conn.path_info, "/")
     ip = conn.remote_ip |> Tuple.to_list() |> Enum.join(".")
-    "#{ip}:#{path}" |> IO.inspect(label: "ip:path")
+    "#{ip}:#{path}"
   end
 
   defp render_error(conn, count) do
     conn
     |> put_status(:forbidden)
-    |> json(%{error: "Rate limit exceeded. #{count}"})
+    |> json(%{error: "Rate limit exceeded. (#{count})"})
     # Stop execution of further plugs, return response now
     |> halt()
   end

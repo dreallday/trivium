@@ -4,33 +4,20 @@ defmodule Trivium.PostGIS do
   """
 
   import Ecto.Query, warn: false
-  alias Trivium.PostGIS.Repo
-
-  # SELECT 
-  # ST_X (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)),
-  # ST_Y (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)),
-  # ST_DistanceSphere(ST_ClosestPoint(ST_Transform (r.way, 4326), point.way), point.way)
-  # FROM
-  # planet_osm_line AS r,
-  # (SELECT ST_SetSRID(ST_Point('-71.412436','41.822898'), 4326) AS way) AS point
-  # ORDER BY 
-  #  3 ASC
-  # LIMIT 1;
+  alias Trivium.Repo
 
   def snap_to_road(map) do
     query =
-      "SELECT ST_X (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS longitude, ST_Y (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS latitude, ST_DistanceSphere(ST_ClosestPoint(ST_Transform (r.way, 4326), point.way), point.way) AS distance FROM planet_osm_line AS r, (SELECT ST_SetSRID(ST_Point('#{
+      "SELECT ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude, ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude, ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance FROM planet_osm_line AS r, (SELECT ST_SetSRID(ST_Point('#{
         map["lon"]
       }','#{map["lat"]}'), 4326) AS way) AS point ORDER BY 3 ASC LIMIT 1;"
 
     case Repo.query(query) do
-      # {:ok, %Postgrex.Result{columns: columns, rows: rows}} ->
-      #   [row | rows] = rows
       {:ok, result} ->
         {:ok, DBUtils.result_to_map_list(result)}
 
-      {:error, _} ->
-        {:error, "dunno"}
+      {:error, error} ->
+        {:error, error}
     end
   end
 
@@ -39,9 +26,9 @@ defmodule Trivium.PostGIS do
     longitude = map["lon"]
     limit = 1 || map["limit"] || 1
     query = "SELECT
-    ST_DistanceSphere(ST_ClosestPoint(ST_Transform (r.way, 4326), point.way), point.way) AS distance,
-    ST_X (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS longitude,
-    ST_Y (ST_ClosestPoint (ST_Transform(r.way, 4326), point.way)) AS latitude,
+    ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance,
+    ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude,
+    ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude,
     r.tags->'maxspeed' AS maxspeed,
     r.tags->'maxspeed:advisory' AS maxspeed_advisory,
     r.name,

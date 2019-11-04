@@ -10,7 +10,17 @@ defmodule Trivium.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      # Docs
+      name: "App API",
+      source_url: "https://github.com/dreallday/trivium",
+      homepage_url: "http://YOUR_PROJECT_HOMEPAGE",
+      docs: [
+        # The main page in the docs
+        main: "Some sort of API",
+        logo: "path/to/logo.png",
+        extras: ["README.md"]
+      ]
     ]
   end
 
@@ -53,7 +63,8 @@ defmodule Trivium.MixProject do
       {:phoenix_live_view, "~> 0.3.1"},
       {:floki, ">= 0.0.0", only: :test},
       {:nebulex, "~> 1.1"},
-      {:stripity_stripe, "~> 2.7"}
+      {:stripity_stripe, "~> 2.7"},
+      {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
     ]
   end
 

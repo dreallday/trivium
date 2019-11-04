@@ -18,7 +18,7 @@ defmodule TriviumWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    # plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
+    plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
     plug Trivium.Plug.VerifyRequest
   end
 
