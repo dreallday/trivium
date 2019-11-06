@@ -2,6 +2,23 @@ defmodule TriviumWeb.ApiController do
   use TriviumWeb, :controller
   alias Trivium.PostGIS
 
+  @moduledoc """
+  This is the Hello module.
+  """
+  @moduledoc since: "0.1.0"
+
+  @doc """
+  Says hello to the given `name`.
+
+  Returns `:ok`.
+
+  ## Examples
+
+      iex> MyApp.Hello.world(:john)
+      :ok
+
+  """
+  @doc since: "0.1.0"
   def test(conn, _params) do
     send_resp(conn, 200, Ecto.UUID.generate())
   end

@@ -1,7 +1,7 @@
 defmodule Trivium.MixProject do
   use Mix.Project
 
-  def project do
+def project do
     [
       app: :trivium,
       version: "0.1.0",
@@ -17,13 +17,14 @@ defmodule Trivium.MixProject do
       homepage_url: "http://YOUR_PROJECT_HOMEPAGE",
       docs: [
         # The main page in the docs
-        main: "Some sort of API",
-        logo: "path/to/logo.png",
+        main: "trivium",
+        logo: "assets/static/images/phoenix.png",
         extras: ["README.md"]
       ]
     ]
   end
 
+  # ex_doc trivium 0.1.0 _build/dev/lib/trivium/ebin -m "trivium" -u "https://github.com/dreallday/trivium"
   # Configuration for the OTP application.
   #
   # Type `mix help compile.app` for more information.

@@ -8,9 +8,14 @@ defmodule Trivium.PostGIS do
 
   def snap_to_road(map) do
     query =
-      "SELECT ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude, ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude, ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance FROM planet_osm_line AS r, (SELECT ST_SetSRID(ST_Point('#{
-        map["lon"]
-      }','#{map["lat"]}'), 4326) AS way) AS point ORDER BY 3 ASC LIMIT 1;"
+      "SELECT 
+      ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude,
+      ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude,
+      ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance
+      FROM (SELECT way FROM planet_osm_line ORDER BY way <-> ST_SetSRID(ST_Point('#{map["lon"]}','#{map["lat"]}'), 4326) LIMIT 10) AS r,
+      (SELECT ST_SetSRID(ST_Point('#{map["lon"]}','#{map["lat"]}'), 4326) AS way) AS point
+      ORDER BY 3 ASC
+      LIMIT 1;"
 
     case Repo.query(query) do
       {:ok, result} ->
@@ -25,6 +30,27 @@ defmodule Trivium.PostGIS do
     latitude = map["lat"]
     longitude = map["lon"]
     limit = 1 || map["limit"] || 1
+    # query = "SELECT
+    # ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance,
+    # ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude,
+    # ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude,
+    # r.tags->'maxspeed' AS maxspeed,
+    # r.tags->'maxspeed:advisory' AS maxspeed_advisory,
+    # r.name,
+    # r.ref,
+    # r.tags,
+    # r.highway AS type,
+    # r.osm_id AS id
+    # FROM
+    # planet_osm_line AS r,
+    # (SELECT ST_SetSRID(ST_Point('#{longitude}','#{latitude}'), 4326) AS way) AS point
+    # WHERE r.highway IS NOT NULL
+    # AND r.highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link', 'living_street', 'service', 'pedestrian', 'road') 
+    # ORDER BY 1 ASC
+    # LIMIT #{limit};"
+
+
+
     query = "SELECT
     ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance,
     ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude,
@@ -37,10 +63,10 @@ defmodule Trivium.PostGIS do
     r.highway AS type,
     r.osm_id AS id
     FROM
-    planet_osm_line AS r,
+    (SELECT * FROM planet_osm_line ORDER BY way <-> ST_SetSRID(ST_Point('#{longitude}','#{latitude}'), 4326) LIMIT 10) AS r,
     (SELECT ST_SetSRID(ST_Point('#{longitude}','#{latitude}'), 4326) AS way) AS point
     WHERE r.highway IS NOT NULL
-    AND r.highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link', 'living_street', 'service', 'pedestrian', 'road') 
+    AND r.highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link', 'living_street', 'service', 'pedestrian', 'road')
     ORDER BY 1 ASC
     LIMIT #{limit};"
 
