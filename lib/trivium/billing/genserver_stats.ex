@@ -1,4 +1,4 @@
-defmodule Trivium.GenServer.Tracker do
+defmodule Trivium.Tracker do
   use GenServer
   alias Trivium.Repo
   alias Trivium.Billing.{Stat}

@@ -22,26 +22,31 @@ defmodule TriviumWeb.Router do
     plug Trivium.Plug.VerifyRequest
   end
 
-  scope "/", TriviumWeb do
+  scope "/" do
     pipe_through :browser
-
-    get "/", PageController, :index
-  end
-
-  scope "/register" do
-    pipe_through :browser
-
     pow_routes()
     pow_extension_routes()
   end
 
   scope "/", TriviumWeb do
+    pipe_through :browser
+
+    get "/", PageController, :index
+    get "/contact", PageController, :index
+    get "/about", PageController, :index
+    get "/legal", PageController, :index
+    get "/docs", DocsController, :index
+  end
+
+  scope "/", TriviumWeb do
     pipe_through [:browser, :protected]
 
-    scope "/dashboard" do
-      get "/", DashboardController, :index
-      resources "/token", TokensController, only: [:index, :create, :delete]
-    end
+    get "/dashboard", DashboardController, :index
+    resources "/token", TokensController, only: [:index, :create, :delete]
+    # scope "/dashboard" do
+    #   get "/", DashboardController, :index
+    #   resources "/token", TokensController, only: [:index, :create, :delete]
+    # end
 
     # Dashboard get "/dashboard", DashboardController, :index
 

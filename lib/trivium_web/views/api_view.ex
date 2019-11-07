@@ -43,7 +43,7 @@ defmodule TriviumWeb.ApiView do
         x when is_nil(x) -> [nil, nil]
         x -> x |> String.split(" ")
       end
-      |> IO.inspect(label: "get_speed_limit")
+      # |> IO.inspect(label: "get_speed_limit")
 
     %{
       id: point["id"],

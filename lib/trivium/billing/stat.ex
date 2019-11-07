@@ -8,17 +8,18 @@ defmodule Trivium.Billing.Stat do
   schema "stats" do
     # field :key, :string
     belongs_to(:token, Token, type: :string, references: :token, foreign_key: :key)
+    field :called_at, :naive_datetime
     field :request_path, :string
     field :query_string, :string
     field :user_agent, :string
     belongs_to(:user, User, type: :binary_id)
 
-    timestamps()
+    # timestamps()
   end
 
   def changeset(stat, attrs) do
     stat
-    |> cast(attrs, [:key, :request_path, :query_string, :user_agent])
+    |> cast(attrs, [:key, :request_path, :query_string, :user_agent, :called_at])
     |> validate_required([:key, :request_path])
   end
 end

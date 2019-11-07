@@ -15,7 +15,13 @@ defmodule Trivium.Application do
       TriviumWeb.Endpoint,
       {Trivium.Verify, [[name: Trivium.Verify]]},
       {Trivium.Cache, []},
-      {Trivium.GenServer.Tracker, []}
+      {Trivium.Tracker, []},
+      {Trivium.Tracker.Producer, :ok},
+      {Trivium.Tracker.ProducerConsumer, :ok},
+      Supervisor.child_spec({Trivium.Tracker.Consumer, []}, id: :c1),
+      Supervisor.child_spec({Trivium.Tracker.Consumer, []}, id: :c2),
+      Supervisor.child_spec({Trivium.Tracker.Consumer, []}, id: :c3),
+      Supervisor.child_spec({Trivium.Tracker.Consumer, []}, id: :c4)
       # Starts a worker by calling: Trivium.Worker.start_link(arg)
       # {Trivium.Worker, arg},
     ]
