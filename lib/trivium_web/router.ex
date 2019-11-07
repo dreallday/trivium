@@ -43,6 +43,7 @@ defmodule TriviumWeb.Router do
 
     get "/dashboard", DashboardController, :index
     resources "/token", TokensController, only: [:index, :create, :delete]
+    resources "/plans", PlanController, only: [:index, :show]
     # scope "/dashboard" do
     #   get "/", DashboardController, :index
     #   resources "/token", TokensController, only: [:index, :create, :delete]

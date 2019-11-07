@@ -12,7 +12,9 @@ defmodule Trivium.PostGIS do
       ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude,
       ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude,
       ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance
-      FROM (SELECT way FROM planet_osm_line ORDER BY way <-> ST_SetSRID(ST_Point('#{map["lon"]}','#{map["lat"]}'), 4326) LIMIT 10) AS r,
+      FROM (SELECT way FROM planet_osm_line ORDER BY way <-> ST_SetSRID(ST_Point('#{map["lon"]}','#{
+        map["lat"]
+      }'), 4326) LIMIT 10) AS r,
       (SELECT ST_SetSRID(ST_Point('#{map["lon"]}','#{map["lat"]}'), 4326) AS way) AS point
       ORDER BY 3 ASC
       LIMIT 1;"
@@ -49,9 +51,8 @@ defmodule Trivium.PostGIS do
     # ORDER BY 1 ASC
     # LIMIT #{limit};"
 
-
-
-    query = "SELECT
+    query =
+      "SELECT
     ST_DistanceSphere(ST_ClosestPoint(r.way, point.way), point.way) AS distance,
     ST_X (ST_ClosestPoint (r.way, point.way)) AS longitude,
     ST_Y (ST_ClosestPoint (r.way, point.way)) AS latitude,
@@ -63,7 +64,9 @@ defmodule Trivium.PostGIS do
     r.highway AS type,
     r.osm_id AS id
     FROM
-    (SELECT * FROM planet_osm_line ORDER BY way <-> ST_SetSRID(ST_Point('#{longitude}','#{latitude}'), 4326) LIMIT 10) AS r,
+    (SELECT * FROM planet_osm_line ORDER BY way <-> ST_SetSRID(ST_Point('#{longitude}','#{
+        latitude
+      }'), 4326) LIMIT 10) AS r,
     (SELECT ST_SetSRID(ST_Point('#{longitude}','#{latitude}'), 4326) AS way) AS point
     WHERE r.highway IS NOT NULL
     AND r.highway IN ('motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'unclassified', 'residential', 'motorway_link', 'trunk_link', 'primary_link', 'secondary_link', 'tertiary_link', 'living_street', 'service', 'pedestrian', 'road')

@@ -75,6 +75,7 @@ defmodule TriviumWeb.TokensControllerTest do
     test "deletes chosen tokens", %{conn: conn, tokens: tokens} do
       conn = delete(conn, Routes.tokens_path(conn, :delete, tokens))
       assert redirected_to(conn) == Routes.tokens_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.tokens_path(conn, :show, tokens))
       end

@@ -1,7 +1,7 @@
 defmodule Trivium.MixProject do
   use Mix.Project
 
-def project do
+  def project do
     [
       app: :trivium,
       version: "0.1.0",
@@ -65,6 +65,7 @@ def project do
       {:floki, ">= 0.0.0", only: :test},
       {:nebulex, "~> 1.1"},
       {:stripity_stripe, "~> 2.7"},
+      {:phoenix_gon, "~> 0.4.0"},
       {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
     ]
   end

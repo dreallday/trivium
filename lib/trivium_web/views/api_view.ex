@@ -3,14 +3,7 @@ defmodule TriviumWeb.ApiView do
   alias TriviumWeb.ApiView
 
   def render("snapped_points.json", %{points: points}) do
-    # points |> IO.inspect(label: "derp")
     %{
-      #     # speedLimits: [
-      #     #   %{
-      #     #     speedLimit: 0,
-      #     #     units: "LT"
-      #     #   }
-      #     # ],
       snappedPoints: render_many(points, ApiView, "point.json", as: :point)
     }
   end
@@ -43,7 +36,8 @@ defmodule TriviumWeb.ApiView do
         x when is_nil(x) -> [nil, nil]
         x -> x |> String.split(" ")
       end
-      # |> IO.inspect(label: "get_speed_limit")
+
+    # |> IO.inspect(label: "get_speed_limit")
 
     %{
       id: point["id"],

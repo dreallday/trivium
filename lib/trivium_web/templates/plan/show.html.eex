@@ -1,0 +1,33 @@
+<h1>Show Plan</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @plan.name %>
+  </li>
+
+  <li>
+    <strong>Price:</strong>
+    <%= @plan.price %>
+  </li>
+
+  <li>
+    <strong>Price per call:</strong>
+    <%= @plan.price_per_call %>
+  </li>
+  
+
+  <li>
+    <strong>requests/day:</strong>
+    <%= @plan.request_per_day %>
+  </li>
+
+  <li>
+    <strong>requests/sec:</strong>
+    <%= @plan.request_limit / @plan.request_limit_interval %>
+  </li>
+
+</ul>
+
+<span><%= link "Back", to: Routes.plan_path(@conn, :index) %></span>

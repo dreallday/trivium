@@ -1,0 +1,30 @@
+<h1>Listing Plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Price per call</th>
+      <th>User limit</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for plan <- @plans do %>
+    <tr>
+      <td><%= plan.name %></td>
+      <td><%= plan.price %></td>
+      <td><%= plan.price_per_call %></td>
+      <td><%= plan.user_limit %></td>
+      <td><%= plan.request_limit %></td>
+      <td><%= plan.request_limit_interval %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.plan_path(@conn, :show, plan) %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

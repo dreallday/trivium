@@ -6,6 +6,7 @@ defmodule Trivium.Users.User do
     extensions: [PowResetPassword, PowEmailConfirmation]
 
   alias Trivium.Private.Token
+  alias Trivium.Billing.Plan
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -14,7 +15,9 @@ defmodule Trivium.Users.User do
     pow_user_fields()
     has_many(:tokens, Token)
     field :token_limit, :integer
-
+    field :cus_id, :string
+    field :disabled_at, :naive_datetime
+    belongs_to(:plan, Plan, references: :plan, foreign_key: :current_plan)
     timestamps()
   end
 

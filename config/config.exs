@@ -41,13 +41,10 @@ config :stripity_stripe, api_key: "rk_test_IVh7x9FAPDFW0Bj4RrvfxgeL00WEmWY9vF"
 #   publish: "pk_test_CXlPW5qAQCOy8sorHuNOrVxd00qdCjnKvf",
 #   secret: "rk_test_IVh7x9FAPDFW0Bj4RrvfxgeL00WEmWY9vF"
 
-
 # Nebulex Cache for API keys
 config :trivium, Trivium.Cache,
   n_shards: 2,
   gc_interval: 3600
-
-
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

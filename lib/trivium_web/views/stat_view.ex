@@ -11,9 +11,6 @@ defmodule TriviumWeb.StatView do
   end
 
   def render("stat.json", %{stat: stat}) do
-    %{id: stat.id,
-      endpoint: stat.endpoint,
-      key: stat.key,
-      user_agent: stat.user_agent}
+    %{id: stat.id, endpoint: stat.endpoint, key: stat.key, user_agent: stat.user_agent}
   end
 end
