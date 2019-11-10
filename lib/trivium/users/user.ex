@@ -1,6 +1,7 @@
 defmodule Trivium.Users.User do
   use Ecto.Schema
   use Pow.Ecto.Schema
+  import Ecto.Changeset
 
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
@@ -25,6 +26,11 @@ defmodule Trivium.Users.User do
     user_or_changeset
     |> pow_changeset(attrs)
     |> pow_extension_changeset(attrs)
+  end
+
+  def user_changeset(user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:name, :current_plan])
   end
 end
 

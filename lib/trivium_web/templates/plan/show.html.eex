@@ -11,13 +11,7 @@
     <strong>Price:</strong>
     <%= @plan.price %>
   </li>
-
-  <li>
-    <strong>Price per call:</strong>
-    <%= @plan.price_per_call %>
-  </li>
   
-
   <li>
     <strong>requests/day:</strong>
     <%= @plan.request_per_day %>
@@ -30,4 +24,7 @@
 
 </ul>
 
+
+<%# Map.put(assigns, :action, Routes.user_path(@conn, :update, @user)) %>
+<span><%= link "Select", to: Routes.user_path(@conn, :update, @user |> Map.put(:current_plan, @plan.id) |> IO.inspect) %></span>
 <span><%= link "Back", to: Routes.plan_path(@conn, :index) %></span>

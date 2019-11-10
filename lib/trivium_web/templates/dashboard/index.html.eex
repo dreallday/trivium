@@ -12,7 +12,7 @@
   <tbody>
     <tr>
       <td>
-        <span><%= "Name Goes Here" %></span>
+        <span><%= @user.name %></span>
       </td>
       <td>
         <span><%= @user.email %></span>
@@ -21,13 +21,11 @@
         <span><%= "••••••••" %></span>
       </td>
       <td>
-        <span>Edit</span>
+        <span><%= link "Edit", to: Routes.user_path(@conn, :show, @user.id) %></span>
       </td>
     </tr>
   </tbody>
 </table>
-
-<span><%= link "????", to: Routes.tokens_path(@conn, :create), method: :create %></span>
 
 <table>
   <thead>
@@ -50,3 +48,25 @@
 </table>
 
 <span><%= link "Add a new API key", to: Routes.tokens_path(@conn, :create), method: :create %></span>
+
+<table>
+  <thead>
+    <tr>
+      <th>Subscription</th>
+      <th></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    <%= case @plan do %>
+      <% nil -> %>
+        <td>Trial</td>
+      <% x -> %>
+        <td>You've got a subscripton</td>
+    <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<span><%= link "Select a Plan", to: Routes.plan_path(@conn, :index) %></span>

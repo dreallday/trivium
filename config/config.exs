@@ -8,7 +8,7 @@
 use Mix.Config
 
 config :trivium,
-  ecto_repos: [Trivium.Repo]
+  ecto_repos: [Trivium.Repo, Trivium.Repo.GISi]
 
 # Configures the endpoint
 config :trivium, TriviumWeb.Endpoint,
@@ -24,6 +24,9 @@ config :logger, :console,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :phoenix,
+  template_engines: [leex: Phoenix.LiveView.Engine]
 
 config :trivium, :pow,
   user: Trivium.Users.User,

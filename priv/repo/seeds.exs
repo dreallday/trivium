@@ -21,9 +21,9 @@
 trial_plan =
   Trivium.Repo.insert!(%Trivium.Billing.Plan{
     name: "Trial",
-    price: 000,
+    price: 0,
     is_trial: true,
-    price_per_call: 000,
+    price_per_call: 0,
     request_limit: 1,
     request_limit_interval: 1,
     request_per_day: 2500,

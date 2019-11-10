@@ -131,8 +131,15 @@ defmodule Trivium.Billing do
       ** (Ecto.NoResultsError)
 
   """
-  def get_plan!(id), do: Repo.get!(Plan, id)
+  def get_plan(id) when not is_nil(id) do
+    get_plan!(id)
+  end
 
+  def get_plan(id) when is_nil(id) do
+    nil
+  end
+
+  def get_plan!(id), do: Repo.get!(Plan, id)
   @doc """
   Creates a plan.
 

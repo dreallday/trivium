@@ -27,8 +27,9 @@ defmodule TriviumWeb.PlanController do
   end
 
   def show(conn, %{"id" => id}) do
+    user = Pow.Plug.current_user(conn)
     plan = Billing.get_plan!(id)
-    render(conn, "show.html", plan: plan)
+    render(conn, "show.html", user: user, plan: plan)
   end
 
   def edit(conn, %{"id" => id}) do

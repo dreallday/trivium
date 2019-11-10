@@ -6,7 +6,7 @@ defmodule Trivium.Accounts do
   import Ecto.Query, warn: false
   alias Trivium.Repo
 
-  alias Trivium.Accounts.LandingUser
+  alias Trivium.Users.User
 
   @doc """
   Returns the list of users.
@@ -18,7 +18,7 @@ defmodule Trivium.Accounts do
 
   """
   def list_users do
-    Repo.all(LandingUser)
+    Repo.all(User)
   end
 
   @doc """
@@ -35,7 +35,7 @@ defmodule Trivium.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(LandingUser, id)
+  def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
   Creates a user.
@@ -50,8 +50,8 @@ defmodule Trivium.Accounts do
 
   """
   def create_user(attrs \\ %{}) do
-    %LandingUser{}
-    |> LandingUser.changeset(attrs)
+    %User{}
+    |> User.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -67,9 +67,9 @@ defmodule Trivium.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_user(%LandingUser{} = user, attrs) do
+  def update_user(%User{} = user, attrs) do
     user
-    |> LandingUser.changeset(attrs)
+    |> User.user_changeset(attrs)
     |> Repo.update()
   end
 
@@ -85,7 +85,7 @@ defmodule Trivium.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_user(%LandingUser{} = user) do
+  def delete_user(%User{} = user) do
     Repo.delete(user)
   end
 
@@ -98,7 +98,7 @@ defmodule Trivium.Accounts do
       %Ecto.Changeset{source: %User{}}
 
   """
-  def change_user(%LandingUser{} = user) do
-    LandingUser.changeset(user, %{})
+  def change_user(%User{} = user) do
+    User.user_changeset(user, %{})
   end
 end

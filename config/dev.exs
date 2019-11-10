@@ -9,6 +9,14 @@ config :trivium, Trivium.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+  config :trivium, Trivium.Repo.GIS,
+  username: "psql_main",
+  password: "s3xyb1tch",
+  database: "gis",
+  hostname: "192.168.1.10",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 50
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -20,6 +28,9 @@ config :trivium, TriviumWeb.Endpoint,
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
+  live_view: [
+    signing_salt: "CBo0wjCUiAoeh2I9iMzGEiQKoLQ/WRfF"
+  ],
   watchers: [
     node: [
       "node_modules/webpack/bin/webpack.js",
@@ -61,7 +72,8 @@ config :trivium, TriviumWeb.Endpoint,
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
       ~r"lib/trivium_web/{live,views}/.*(ex)$",
-      ~r"lib/trivium_web/templates/.*(eex)$"
+      ~r"lib/trivium_web/templates/.*(eex)$",
+      ~r{lib/trivium_web/live/.*(ex)$}
     ]
   ]
 

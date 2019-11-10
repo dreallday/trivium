@@ -24,6 +24,7 @@ defmodule TriviumWeb do
       import Plug.Conn
       import TriviumWeb.Gettext
       alias TriviumWeb.Router.Helpers, as: Routes
+      import TriviumWeb.PowHelper
     end
   end
 
@@ -31,7 +32,8 @@ defmodule TriviumWeb do
     quote do
       use Phoenix.View,
         root: "lib/trivium_web/templates",
-        namespace: TriviumWeb
+        namespace: TriviumWeb,
+        pattern: "**/*"
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
@@ -42,14 +44,17 @@ defmodule TriviumWeb do
       import TriviumWeb.ErrorHelpers
       import TriviumWeb.Gettext
       alias TriviumWeb.Router.Helpers, as: Routes
+      # import Phoenix.LiveView, only: [live_render: 2, live_render: 3]
     end
   end
 
+  @spec router :: {:__block__, [], [{:import, [...], [...]} | {:use, [...], [...]}, ...]}
   def router do
     quote do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      # import Phoenix.LiveView.Router
     end
   end
 

@@ -10,7 +10,7 @@ defmodule Trivium.Application do
     children = [
       # Start the Ecto repository
       Trivium.Repo,
-      # Trivium.PostGIS.Repo,
+      Trivium.Repo.GIS,
       # Start the endpoint when the application starts
       TriviumWeb.Endpoint,
       {Trivium.Verify, [[name: Trivium.Verify]]},
