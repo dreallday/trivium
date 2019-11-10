@@ -31,6 +31,7 @@ defmodule TriviumWeb.UserController do
 
   def update(conn, %{"user" => user_params}) do
     # user = Accounts.get_user!(id)
+    user_params |> IO.inspect(label: "on user update")
     user = Pow.Plug.current_user(conn)
 
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
@@ -41,13 +42,6 @@ defmodule TriviumWeb.UserController do
       |> redirect(to: Routes.dashboard_path(conn, :index))
     end
   end
-
-  # def update_plan(conn, %{"user" => user_params}) do
-  #   user = Pow.Plug.current_user(conn)
-
-
-  # end
-
   # def delete(conn, %{"id" => id}) do
   #   user = Accounts.get_user!(id)
 

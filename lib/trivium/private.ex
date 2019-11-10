@@ -70,10 +70,13 @@ defmodule Trivium.Private do
 
     # user.token_limit 
     # |> IO.inspect(label: "create_token user")
-    used_tokens = list_token_number(conn)
-    # |> IO.inspect(label: "create_token list_tokens")
-    available_tokens = user.token_limit - used_tokens
-    # |> IO.inspect(label: "create_token user")
+    used_tokens =
+      list_token_number(conn)
+      |> IO.inspect(label: "used_tokens")
+
+    available_tokens =
+      (user.token_limit - used_tokens)
+      |> IO.inspect(label: "available_tokens")
 
     cond do
       available_tokens > 0 ->

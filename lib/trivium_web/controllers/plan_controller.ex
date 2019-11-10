@@ -1,6 +1,7 @@
 defmodule TriviumWeb.PlanController do
   use TriviumWeb, :controller
 
+  alias Trivium.Accounts
   alias Trivium.Billing
   alias Trivium.Billing.Plan
 
@@ -58,6 +59,20 @@ defmodule TriviumWeb.PlanController do
 
     conn
     |> put_flash(:info, "Plan deleted successfully.")
+    |> redirect(to: Routes.plan_path(conn, :index))
+  end
+
+  def update_plan_for_user(conn, %{"id" => id}) do
+    # id |> IO.inspect(label: "plan id")
+    user = Pow.Plug.current_user(conn) |> IO.inspect(label: "user")
+    plan = Billing.get_plan(id) |> IO.inspect(label: "plan")
+
+    {:ok, updated_user} =
+      Accounts.change_user_plan(user, plan) |> IO.inspect(label: "updated user")
+
+    conn
+    |> put_flash(:info, "Plan-ed successfully.")
+    |> sync_user(updated_user)
     |> redirect(to: Routes.plan_path(conn, :index))
   end
 end

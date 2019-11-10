@@ -5,8 +5,8 @@
     <tr>
       <th>Name</th>
       <th>Price</th>
-      <th>Price per call</th>
-      <th>User limit</th>
+      <th>requests/day</th>
+      <th>requests/sec</th>
 
       <th></th>
     </tr>
@@ -16,14 +16,10 @@
     <tr>
       <td><%= plan.name %></td>
       <td><%= plan.price %></td>
-      <td><%= plan.price_per_call %></td>
-      <td><%= plan.user_limit %></td>
-      <td><%= plan.request_limit %></td>
-      <td><%= plan.request_limit_interval %></td>
-
+      <td><%= plan.request_per_day %></td>
+      <td><%= plan.request_limit / plan.request_limit_interval %></td>
       <td>
-        <span><%= link "Select", to: Routes.plan_path(@conn, :show, plan) %></span>
-        <span><%= link "Show", to: Routes.plan_path(@conn, :show, plan) %></span>
+        <span><%= link "Select", to: Routes.plan_path(@conn, :update_plan_for_user, plan.id), method: :post %></span>
       </td>
     </tr>
 <% end %>

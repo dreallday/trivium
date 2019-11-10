@@ -6,10 +6,8 @@ defmodule TriviumWeb.DashboardController do
   alias Trivium.Private
   alias Trivium.Billing
 
-
   def index(conn, _params) do
-
-    user = Pow.Plug.current_user(conn)
+    user = Pow.Plug.current_user(conn) |> IO.inspect(label: "Current User")
     tokens = Private.list_tokens(conn)
     plan = Billing.get_plan(user.current_plan)
     # payment = Dashboard.get_user_payment(conn)

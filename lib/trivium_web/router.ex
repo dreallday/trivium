@@ -9,7 +9,7 @@ defmodule TriviumWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Phoenix.LiveView.Flash
+    # plug Phoenix.LiveView.Flash
   end
 
   pipeline :protected do
@@ -43,9 +43,20 @@ defmodule TriviumWeb.Router do
     pipe_through [:browser, :protected]
 
     get "/dashboard", DashboardController, :index
-    resources "/user", UserController, only: [:show, :update]
+    # resources "/user", UserController, only: [:show, :update]
+    scope "/user" do
+      get "/:id", UserController, :show
+      post "/:id", UserController, :update
+      put "/:id", UserController, :update
+    end
     resources "/token", TokensController, only: [:index, :create, :delete]
-    resources "/plans", PlanController, only: [:index, :show]
+    # resources "/plans", PlanController, only: [:index, :show]
+
+    scope "/plans" do
+      get "/", PlanController, :index
+      get "/:id", PlanController, :show
+      post "/:id", PlanController, :update_plan_for_user
+    end
     # scope "/dashboard" do
     #   get "/", DashboardController, :index
     #   resources "/token", TokensController, only: [:index, :create, :delete]

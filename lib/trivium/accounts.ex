@@ -7,6 +7,7 @@ defmodule Trivium.Accounts do
   alias Trivium.Repo
 
   alias Trivium.Users.User
+  alias Trivium.Billing.Plan
 
   @doc """
   Returns the list of users.
@@ -35,7 +36,10 @@ defmodule Trivium.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id) do
+    IO.puts(" HIIIII ")
+    Repo.get!(User, id)
+  end
 
   @doc """
   Creates a user.
@@ -100,5 +104,12 @@ defmodule Trivium.Accounts do
   """
   def change_user(%User{} = user) do
     User.user_changeset(user, %{})
+  end
+
+  def change_user_plan(%User{} = user, %Plan{} = plan) do
+    user
+    |> User.plan_changeset(%{current_plan: plan.id})
+    |> IO.inspect(label: "change_user_plan")
+    |> Repo.update()
   end
 end

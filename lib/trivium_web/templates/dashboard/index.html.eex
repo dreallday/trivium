@@ -63,7 +63,7 @@
       <% nil -> %>
         <td>Trial</td>
       <% x -> %>
-        <td>You've got a subscripton</td>
+        <td><%= @plan.name %></td>
     <% end %>
     </tr>
   </tbody>

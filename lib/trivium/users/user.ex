@@ -6,19 +6,16 @@ defmodule Trivium.Users.User do
   use Pow.Extension.Ecto.Schema,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
-  alias Trivium.Private.Token
-  alias Trivium.Billing.Plan
-
   @primary_key {:id, :binary_id, autogenerate: true}
 
   schema "users" do
     field :name, :string
     pow_user_fields()
-    has_many(:tokens, Token)
+    has_many(:tokens, Trivium.Private.Token)
     field :token_limit, :integer
     field :cus_id, :string
     field :disabled_at, :naive_datetime
-    belongs_to(:plan, Plan, references: :plan, foreign_key: :current_plan)
+    belongs_to(:plan, Trivium.Billing.Plan, foreign_key: :current_plan, type: :binary_id)
     timestamps()
   end
 
@@ -26,11 +23,18 @@ defmodule Trivium.Users.User do
     user_or_changeset
     |> pow_changeset(attrs)
     |> pow_extension_changeset(attrs)
+    |> cast(attrs, [:token_limit, :cus_id, :disabled_at, :current_plan])
   end
 
   def user_changeset(user, attrs \\ %{}) do
     user
     |> cast(attrs, [:name, :current_plan])
+  end
+
+  def plan_changeset(user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:current_plan])
+    |> validate_required([:current_plan])
   end
 end
 
