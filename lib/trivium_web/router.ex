@@ -15,7 +15,14 @@ defmodule TriviumWeb.Router do
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
       error_handler: Pow.Phoenix.PlugErrorHandler
+
+    # error_handler: TriviumWeb.AuthErrorHandler
   end
+
+  # pipeline :not_authenticated do
+  #   plug Pow.Plug.RequireNotAuthenticated,
+  #     error_handler: TriviumWeb.AuthErrorHandler
+  # end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -49,6 +56,7 @@ defmodule TriviumWeb.Router do
       post "/:id", UserController, :update
       put "/:id", UserController, :update
     end
+
     resources "/token", TokensController, only: [:index, :create, :delete]
     # resources "/plans", PlanController, only: [:index, :show]
 
@@ -57,14 +65,12 @@ defmodule TriviumWeb.Router do
       get "/:id", PlanController, :show
       post "/:id", PlanController, :update_plan_for_user
     end
-    # scope "/dashboard" do
-    #   get "/", DashboardController, :index
-    #   resources "/token", TokensController, only: [:index, :create, :delete]
-    # end
 
-    # Dashboard get "/dashboard", DashboardController, :index
+    scope "/payment" do
+      resources "/", PaymentController
+    end
 
-    # User Preferences
+    delete "/logout", SessionController, :delete, as: :logout
   end
 
   scope "/api", TriviumWeb do

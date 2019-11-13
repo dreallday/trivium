@@ -1,9 +1,6 @@
 defmodule Trivium.Plug.VerifyRequest do
   import Plug.Conn
   import Ecto.Query, warn: false
-  alias Trivium.Repo
-  alias Trivium.Private.Token
-  alias Trivium.Tracker
   alias Trivium.Tracker.Producer
 
   defmodule IncompleteRequestError do
@@ -28,6 +25,7 @@ defmodule Trivium.Plug.VerifyRequest do
         # Tracker.save(pid, %{request_path: request_path, key: key})
         Producer.add(%{
           request_path: request_path,
+          query_string: query_string,
           key: key,
           called_at: NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second)
         })

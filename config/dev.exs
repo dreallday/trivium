@@ -9,14 +9,22 @@ config :trivium, Trivium.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
-  config :trivium, Trivium.Repo.GIS,
-  username: "psql_main",
-  password: "s3xyb1tch",
-  database: "gis",
-  hostname: "192.168.1.10",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 50
+# config :trivium, Trivium.Repo.GIS,
+#   username: "psql_readonly",#   username: "psql_main",
+#   password: "postgres",#   password: "s3xyb1tch",
+#   database: "gis",
+#   hostname: "192.168.1.10",
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 50
 
+config :trivium, Trivium.Repo.GIS,
+  username: "postgres_readonly",
+  password: "postgres",
+  database: "gis",
+  hostname: "localhost",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 50,
+  read_only: true
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

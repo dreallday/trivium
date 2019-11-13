@@ -34,6 +34,7 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
       add(:deleted_at, :naive_datetime)
       add(:token_limit, :integer, default: 1)
       add(:cus_id, :string, comment: "Stripe Customer ID")
+      add(:payment_id, :string, comment: "Stripe Payment ID")
       add(:current_plan, references(:plans, type: :uuid))
 
       add(:disabled_at, :naive_datetime)
