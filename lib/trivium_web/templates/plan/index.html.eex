@@ -1,4 +1,4 @@
-<h1>Listing Plans</h1>
+<h1>Available Subscription Plans</h1>
 
 <table>
   <thead>
@@ -19,7 +19,10 @@
       <td><%= plan.request_per_day %></td>
       <td><%= plan.request_limit / plan.request_limit_interval %></td>
       <td>
+      <%= if Pow.Plug.current_user(@conn) do %>
         <span><%= link "Select", to: Routes.plan_path(@conn, :update_plan_for_user, plan.id), method: :post %></span>
+      <% else %>
+      <% end %>
       </td>
     </tr>
 <% end %>

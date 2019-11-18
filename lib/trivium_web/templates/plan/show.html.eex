@@ -9,9 +9,9 @@
 
   <li>
     <strong>Price:</strong>
-    <%= @plan.price %>
+    $<%= @plan.price / 100 %>
   </li>
-  
+
   <li>
     <strong>requests/day:</strong>
     <%= @plan.request_per_day %>

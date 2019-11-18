@@ -68,6 +68,7 @@ defmodule TriviumWeb.Router do
       post "/", UserController, :update
       put "/", UserController, :update
 
+      post "/plan/select/:id", PlanController, :update_plan_for_user
       resources "/token", TokensController, only: [:create, :delete]
       resources "/payment", PaymentController, only: [:index, :create, :update]
     end
@@ -79,7 +80,7 @@ defmodule TriviumWeb.Router do
 
     scope "/plans" do
       get "/:id", PlanController, :show
-      post "/:id", PlanController, :update_plan_for_user
+      # post "/:id", PlanController, :update_plan_for_user
     end
 
     get "/logout", SessionController, :delete, as: :logout
