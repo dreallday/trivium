@@ -23,7 +23,7 @@ defmodule TriviumWeb.RegistrationController do
       {:ok, user, conn} ->
         conn
         |> put_flash(:info, "Welcome!")
-        |> redirect(to: Routes.page_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
 
       {:error, changeset, conn} ->
         render(conn, "new.html", changeset: changeset)

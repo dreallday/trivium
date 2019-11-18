@@ -317,18 +317,20 @@ defmodule Trivium.Billing do
     raise "TODO"
   end
 
-  @doc """
-  Gets a single payment.
+  def get_payment!(stripe_user_id, token)
+      when not is_nil(stripe_user_id)
+      when not is_nil(token) do
+    case stripe_user_id
+         |> Stripe.Customer.retrieve() do
+      {:ok, stripe_user} ->
+        stripe_user.sources |> Map.fetch!(:data) |> List.first()
 
-  Raises if the Payment does not exist.
+      {:error, _} ->
+        nil
+    end
+  end
 
-  ## Examples
-
-      iex> get_payment!(123)
-      %Payment{}
-
-  """
-  def get_payment!(id), do: raise("TODO")
+  def get_payment!(_, _), do: nil
 
   @doc """
   Creates a payment.
@@ -348,91 +350,51 @@ defmodule Trivium.Billing do
     |> Repo.update()
   end
 
-  def stripe_update_payment_method(user) do
+  def get_or_create_stripe_customer(user, token) do
     cus_id =
-      stripe_create_or_update_customer(user)
-      |> IO.inspect(label: "after stripe_create_or_update_customer")
+      case user.cus_id |> is_nil() do
+        true ->
+          create_stripe_customer(user, token)
 
-    cus_id
-    |> Stripe.Customer.update(%{
-      source: user.payment_id
-      # default_source: user.payment_id,
-    })
-    |> IO.inspect(label: "Stripe.Customer.update")
+        false ->
+          update_stripe_customer(user, token)
+      end
 
-    # %{
-    #   source: user.payment_id,
-    #   # default_source: user.payment_id,
-    # }
-    # |> Stripe.Customer.update()
+    user
+    |> User.update_payment_changeset(%{cus_id: cus_id, payment_id: token})
+    |> Repo.update()
+    |> IO.inspect(label: "get_or_create_stripe_customer")
   end
 
-  def stripe_create_or_update_customer(user) do
-    case user.cus_id |> is_nil() do
-      true ->
-        {:ok, stripe_user} =
-          Stripe.Customer.create(%{email: user.email})
-          |> IO.inspect(label: "stripe_create_or_update_customer")
+  def update_stripe_customer(user, token) do
+    # user |> IO.inspect(label: "update_stripe_customer")
 
-        user
-        |> User.user_changeset(%{cus_id: stripe_user.id})
-        |> Repo.update()
+    case Stripe.Customer.update(user.cus_id, %{source: token}) do
+      {:ok, user} ->
+        %{id: stripe_customer_id} = user
+        stripe_customer_id
 
-        stripe_user.id
-
-      false ->
-        user.cus_id
+      {:error, _} ->
+        nil
     end
   end
 
-  # def change_user_plan(%User{} = user, %Plan{} = plan) do
-  #   user
-  #   |> User.plan_changeset(%{current_plan: plan.id})
-  #   |> IO.inspect(label: "change_user_plan")
-  #   |> Repo.update()
-  # end
+  def create_stripe_customer(user, token) do
+    user |> IO.inspect(label: "create_stripe_customer")
 
-  @doc """
-  Updates a payment.
+    case Stripe.Customer.create(%{email: user.email, source: token}) do
+      {:ok, %{id: stripe_customer_id}} ->
+        stripe_customer_id
 
-  ## Examples
-
-      iex> update_payment(payment, %{field: new_value})
-      {:ok, %Payment{}}
-
-      iex> update_payment(payment, %{field: bad_value})
-      {:error, ...}
-
-  """
-  def update_payment(%Payment{} = payment, attrs) do
-    raise "TODO"
+      {:error, _} ->
+        nil
+    end
   end
 
-  @doc """
-  Deletes a Payment.
-
-  ## Examples
-
-      iex> delete_payment(payment)
-      {:ok, %Payment{}}
-
-      iex> delete_payment(payment)
-      {:error, ...}
-
-  """
   def delete_payment(%Payment{} = payment) do
     raise "TODO"
   end
 
-  @doc """
-  Returns a data structure for tracking payment changes.
-
-  ## Examples
-
-      iex> change_payment(payment)
-      %Todo{...}
-
-  """
   def change_payment(%Payment{} = payment) do
     raise "TODO"
   end

@@ -2,22 +2,9 @@ defmodule TriviumWeb.TokensController do
   use TriviumWeb, :controller
 
   alias Trivium.Private
-  alias Trivium.Private.Token
-
-  def index(conn, _params) do
-    conn
-    |> redirect(to: Routes.dashboard_path(conn, :index))
-
-    # tokens = Private.list_tokens(conn)
-    # render(conn, "index.html", tokens: tokens)
-  end
-
-  def new(conn, _params) do
-    changeset = Private.change_token(%Token{})
-    render(conn, "new.html", changeset: changeset)
-  end
 
   def create(conn, _) do
+    IO.puts "Tokens Controller Create"
     case Private.create_token(conn) do
       {:ok, tokens} ->
         conn

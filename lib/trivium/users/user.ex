@@ -24,13 +24,15 @@ defmodule Trivium.Users.User do
     user_or_changeset
     |> pow_changeset(attrs)
     |> pow_extension_changeset(attrs)
+    |> Ecto.Changeset.cast(attrs, [:name, :token_limit, :cus_id, :disabled_at, :current_plan, :payment_id])
+    # |> Ecto.Changeset.validate_required([:custom])
     # |> cast(attrs, [:token_limit, :cus_id, :disabled_at, :current_plan])
   end
 
-  def user_changeset(user, attrs \\ %{}) do
-    user
-    |> cast(attrs, [:name, :token_limit, :cus_id, :disabled_at, :current_plan])
-  end
+  # def user_changeset(user, attrs \\ %{}) do
+  #   user
+  #   |> cast(attrs, [:name, :token_limit, :cus_id, :disabled_at, :current_plan])
+  # end
 
   def plan_changeset(user, attrs \\ %{}) do
     user
@@ -40,7 +42,7 @@ defmodule Trivium.Users.User do
 
   def update_payment_changeset(user, attrs \\ %{}) do
     user
-    |> cast(attrs, [:payment_id])
+    |> cast(attrs, [:cus_id, :payment_id])
     |> validate_required([:payment_id])
   end
 end

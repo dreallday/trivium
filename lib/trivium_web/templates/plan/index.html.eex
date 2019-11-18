@@ -15,7 +15,7 @@
 <%= for plan <- @plans do %>
     <tr>
       <td><%= plan.name %></td>
-      <td><%= plan.price %></td>
+      <td>$<%= plan.price / 100 %>/month</td>
       <td><%= plan.request_per_day %></td>
       <td><%= plan.request_limit / plan.request_limit_interval %></td>
       <td>

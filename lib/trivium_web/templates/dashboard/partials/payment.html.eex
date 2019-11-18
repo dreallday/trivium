@@ -1,0 +1,32 @@
+<table>
+  <thead>
+    <tr>
+      <th>Payment</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <%= case @payment do %>
+      <% nil -> %>
+        <tr>
+          <td>None</td>
+          <td>
+            <span><%= link "Add Payment", to: Routes.payment_path(@conn, :index, @user.id) %></span>
+          </td>
+        </tr>
+      <% x -> %>
+        <tr>
+          <td>•••• •••• •••• <%= @payment.last4 %></td>
+          <td><%= @payment.exp_month %>/<%= @payment.exp_year %></td>
+        </tr>
+        <tr>
+          <td>
+            <span><%= link "Update", to: Routes.dashboard_path(@conn, :index) %></span>
+          </td>
+          <td></td>
+        </tr>
+    <% end %>
+    </tr>
+  </tbody>
+</table>

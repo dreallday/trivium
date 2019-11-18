@@ -32,41 +32,28 @@
     <tr>
       <th>API Keys</th>
       <th></th>
-      
+
     </tr>
   </thead>
   <tbody>
-    <%= for tokens <- @tokens do %>
+    <%= for tk <- @tokens do %>
         <tr>
-          <td><%= tokens.token %></td>
+          <td><%= tk.token %></td>
           <td>
-            <span><%= link "Delete", to: Routes.tokens_path(@conn, :delete, tokens), method: :delete, data: [confirm: "Are you sure?"] %></span>
+            <%= form_for @conn, Routes.tokens_path(@conn, :delete, tk.id), [method: :delete], fn f -> %>
+              <%= button("Delete", to: Routes.tokens_path(@conn, :delete, tk.id), method: :delete) %>
+            <% end %>
           </td>
         </tr>
     <% end %>
   </tbody>
 </table>
 
-<span><%= link "Add a new API key", to: Routes.tokens_path(@conn, :create), method: :create %></span>
+<span>
+  <%= form_for @conn, Routes.tokens_path(@conn, :create, @user.id), [method: :post], fn f -> %>
+    <%= button("New API Token", to: Routes.tokens_path(@conn, :create, @user.id), method: :post, class: "btn") %>
+  <% end %>
+</span>
 
-<table>
-  <thead>
-    <tr>
-      <th>Subscription</th>
-      <th></th>
-      
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-    <%= case @plan do %>
-      <% nil -> %>
-        <td>Trial</td>
-      <% x -> %>
-        <td><%= @plan.name %></td>
-    <% end %>
-    </tr>
-  </tbody>
-</table>
-
-<span><%= link "Select a Plan", to: Routes.plan_path(@conn, :index) %></span>
+<%= render "partials/payment.html", conn: @conn, user: @user, payment: @payment %>
+<%= render "partials/subscription.html", conn: @conn, plan: @plan %>

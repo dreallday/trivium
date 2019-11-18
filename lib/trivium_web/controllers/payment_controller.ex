@@ -5,8 +5,9 @@ defmodule TriviumWeb.PaymentController do
   alias Trivium.Billing.Payment
 
   def index(conn, _params) do
+    user = Pow.Plug.current_user(conn)
     # payments = Billing.list_payments()
-    render(conn, "index.html", payments: %{})
+    render(conn, "index.html", payments: %{}, user: user)
   end
 
   def new(conn, _params) do
@@ -18,16 +19,17 @@ defmodule TriviumWeb.PaymentController do
   def create(conn, %{"stripeToken" => stripe_token}) do
     user = Pow.Plug.current_user(conn)
 
-    case Billing.create_payment(user, %{payment_id: stripe_token}) do
+    stripe_token |> IO.inspect(label: "stripe_token")
+    user.cus_id |> IO.inspect(label: "cus_id")
+    case Billing.get_or_create_stripe_customer(user, stripe_token) do
       {:ok, user} ->
         user |> IO.inspect(label: "updated user")
         user.payment_id |> IO.inspect(label: "updated user payment_id")
-        user |> Billing.stripe_update_payment_method()
 
         conn
         |> put_flash(:info, "Payment created successfully.")
         |> sync_user(user)
-        |> redirect(to: Routes.payment_path(conn, :index))
+        |> redirect(to: Routes.dashboard_path(conn, :index))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         # render(conn, "new.html", changeset: changeset)

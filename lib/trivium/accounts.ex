@@ -73,7 +73,7 @@ defmodule Trivium.Accounts do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.user_changeset(attrs)
+    |> User.changeset(attrs)
     |> Repo.update()
   end
 
@@ -103,7 +103,7 @@ defmodule Trivium.Accounts do
 
   """
   def change_user(%User{} = user) do
-    User.user_changeset(user, %{})
+    User.changeset(user, %{})
   end
 
   def change_user_plan(%User{} = user, %Plan{} = plan) do

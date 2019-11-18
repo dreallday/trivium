@@ -14,15 +14,16 @@ defmodule TriviumWeb.Router do
 
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
-      error_handler: Pow.Phoenix.PlugErrorHandler
+      # error_handler: Pow.Phoenix.PlugErrorHandler
+      error_handler: TriviumWeb.AuthErrorHandler
 
     # error_handler: TriviumWeb.AuthErrorHandler
   end
 
-  # pipeline :not_authenticated do
-  #   plug Pow.Plug.RequireNotAuthenticated,
-  #     error_handler: TriviumWeb.AuthErrorHandler
-  # end
+  pipeline :not_authenticated do
+    plug Pow.Plug.RequireNotAuthenticated,
+      error_handler: TriviumWeb.AuthErrorHandler
+  end
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -30,20 +31,31 @@ defmodule TriviumWeb.Router do
     plug Trivium.Plug.VerifyRequest
   end
 
-  scope "/" do
-    pipe_through :browser
-    pow_routes()
-    pow_extension_routes()
-  end
+  # scope "/" do
+  #   pipe_through [:browser, :not_authenticated]
+  #   # pow_routes()
+  #   pow_extension_routes()
+  # end
 
   scope "/", TriviumWeb do
-    pipe_through :browser
+    pipe_through [:browser]
 
     get "/", PageController, :index
     get "/contact", PageController, :index
     get "/about", PageController, :index
     get "/legal", PageController, :index
     get "/docs", DocsController, :index
+    get "/faq", PageController, :index
+    get "/plans", PlanController, :index
+  end
+
+  scope "/", TriviumWeb do
+    pipe_through [:browser, :not_authenticated]
+
+    get "/signup", RegistrationController, :new, as: :signup
+    post "/signup", RegistrationController, :create, as: :signup
+    get "/login", SessionController, :new, as: :login
+    post "/login", SessionController, :create, as: :login
   end
 
   scope "/", TriviumWeb do
@@ -51,32 +63,33 @@ defmodule TriviumWeb.Router do
 
     get "/dashboard", DashboardController, :index
     # resources "/user", UserController, only: [:show, :update]
-    scope "/user" do
-      get "/:id", UserController, :show
-      post "/:id", UserController, :update
-      put "/:id", UserController, :update
+    scope "/user/:id" do
+      get "/", UserController, :show
+      post "/", UserController, :update
+      put "/", UserController, :update
+
+      resources "/token", TokensController, only: [:create, :delete]
+      resources "/payment", PaymentController, only: [:index, :create, :update]
     end
 
-    resources "/token", TokensController, only: [:index, :create, :delete]
+    # , only: [:index, :create, :delete]
+
+    # resources "/token", TokensController, only: [:index, :create, :delete]
     # resources "/plans", PlanController, only: [:index, :show]
 
     scope "/plans" do
-      get "/", PlanController, :index
       get "/:id", PlanController, :show
       post "/:id", PlanController, :update_plan_for_user
     end
 
-    scope "/payment" do
-      resources "/", PaymentController
-    end
-
+    get "/logout", SessionController, :delete, as: :logout
     delete "/logout", SessionController, :delete, as: :logout
   end
 
   scope "/api", TriviumWeb do
-    scope "/v0" do
-      resources "/interest", UserController, only: [:create]
-    end
+    # scope "/v0" do
+    #   resources "/interest", UserController, only: [:create]
+    # end
 
     # https://github.com/danschultzer/pow/blob/master/guides/api.md
     # :crypto.hmac(:sha, "secret", "data") |> Base.encode16(case: :lower)

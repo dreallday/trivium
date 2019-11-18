@@ -33,7 +33,7 @@ config :trivium, :pow,
   repo: Trivium.Repo,
   web_module: TriviumWeb,
   extensions: [PowResetPassword, PowEmailConfirmation],
-  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
+  controller_callbacks: [Pow.Extension.Phoenix.ControllerCallbacks],
   # https://github.com/danschultzer/pow/blob/master/guides/configuring_mailer.md
   mailer_backend: Trivium.PowMailer,
   routes_backend: TriviumWeb.Pow.Routes

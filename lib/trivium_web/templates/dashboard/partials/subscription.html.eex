@@ -1,0 +1,19 @@
+<table>
+  <thead>
+    <tr>
+      <th>Subscription</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <%= case @plan do %>
+        <% nil -> %>
+          <td>None</td>
+        <% x -> %>
+          <td><%= @plan.name %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<span><%= link "Select a Plan", to: Routes.plan_path(@conn, :index) %></span>
