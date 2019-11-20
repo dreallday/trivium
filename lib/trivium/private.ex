@@ -1,7 +1,5 @@
 defmodule Trivium.Private do
-  @moduledoc """
-  The Private context.
-  """
+@moduledoc false
 
   import Ecto.Query, warn: false
   alias Trivium.Repo
@@ -97,7 +95,7 @@ defmodule Trivium.Private do
 
       available_tokens == 0 ->
         # available_tokens |> IO.inspect(label: " = 0")
-        {:token_error, "#{used_tokens}/#{user.token_limit} tokens used, can't create any more"}
+        {:token_error, "You can only have #{user.token_limit} active API tokens"}
 
       true ->
         available_tokens |> IO.inspect(label: "hax")

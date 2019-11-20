@@ -1,4 +1,5 @@
 defmodule TriviumWeb.TokensController do
+  @moduledoc false
   use TriviumWeb, :controller
 
   alias Trivium.Private

@@ -1,7 +1,5 @@
 defmodule Trivium.Accounts do
-  @moduledoc """
-  The Accounts context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Trivium.Repo

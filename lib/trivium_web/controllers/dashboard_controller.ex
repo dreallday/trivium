@@ -1,4 +1,5 @@
 defmodule TriviumWeb.DashboardController do
+  @moduledoc false
   use TriviumWeb, :controller
   # alias Phoenix.LiveView
   # alias TriviumWeb.DashboardLive.Index

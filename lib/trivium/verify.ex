@@ -1,4 +1,5 @@
 defmodule Trivium.Verify do
+  @moduledoc false
   use GenServer
 
   import Ecto.Query, warn: false

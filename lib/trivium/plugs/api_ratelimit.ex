@@ -1,4 +1,5 @@
 defmodule Trivium.Plug.RateLimit do
+  @moduledoc false
   import Plug.Conn
   import Phoenix.Controller, only: [json: 2]
 

@@ -1,4 +1,4 @@
-defmodule TriviumWeb.RegistrationView do
+defmodule TriviumWeb.DocsView do
   @moduledoc false
   use TriviumWeb, :view
 end

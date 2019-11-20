@@ -1,4 +1,5 @@
 defmodule Trivium.Tracker.Consumer do
+  @moduledoc false
   use GenStage
   alias Trivium.Repo
   alias Trivium.Billing.{Stat}

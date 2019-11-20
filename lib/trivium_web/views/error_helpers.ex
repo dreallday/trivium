@@ -1,5 +1,6 @@
 defmodule TriviumWeb.ErrorHelpers do
-  @moduledoc """
+  @moduledoc false
+  @doc """
   Conveniences for translating and building error messages.
   """
 

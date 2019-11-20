@@ -1,4 +1,5 @@
 defmodule TriviumWeb.PlanController do
+  @moduledoc false
   use TriviumWeb, :controller
 
   alias Trivium.Accounts

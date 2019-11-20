@@ -1,4 +1,5 @@
 defmodule TriviumWeb.Phoenix.ControllerCallbacks do
+  @moduledoc false
   use Pow.Extension.Phoenix.ControllerCallbacks.Base
 
   # def before_process do

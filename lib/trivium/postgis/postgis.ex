@@ -1,7 +1,5 @@
 defmodule Trivium.PostGIS do
-  @moduledoc """
-  The Private context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Trivium.Repo.GIS

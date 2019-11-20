@@ -1,4 +1,5 @@
 defmodule Trivium.Tracker do
+  @moduledoc false
   use GenServer
   alias Trivium.Repo
   alias Trivium.Billing.{Stat}

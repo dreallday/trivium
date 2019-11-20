@@ -1,4 +1,5 @@
 defmodule Trivium.Billing.Invoice do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

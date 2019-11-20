@@ -1,4 +1,5 @@
 defmodule TriviumWeb.PaymentController do
+  @moduledoc false
   use TriviumWeb, :controller
 
   alias Trivium.Billing

@@ -1,7 +1,16 @@
 defmodule TriviumWeb.Router do
+  @moduledoc false
   use TriviumWeb, :router
   use Pow.Phoenix.Router
-  use Pow.Extension.Phoenix.Router, otp_app: :trivium
+  # use Pow.Extension.Phoenix.Router, otp_app: :trivium
+
+  # plug(Plug.Static, at: "/", from: :trivium)
+
+  if Mix.env() == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
+  forward "/docs", Trivium.DocServer
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -10,6 +19,9 @@ defmodule TriviumWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     # plug Phoenix.LiveView.Flash
+
+    # plug Plug.Static.IndexHtml, at: "/"
+    # plug Plug.Static, at: "/", from: {:trivium, "priv/trivium/build/"}
   end
 
   pipeline :protected do
@@ -27,7 +39,7 @@ defmodule TriviumWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    # plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
+    plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
     plug Trivium.Plug.VerifyRequest
   end
 
@@ -41,10 +53,9 @@ defmodule TriviumWeb.Router do
     pipe_through [:browser]
 
     get "/", PageController, :index
-    get "/contact", PageController, :index
+    resources "/contact", ContactController, only: [:create, :index]
     get "/about", PageController, :index
     get "/legal", PageController, :index
-    get "/docs", DocsController, :index
     get "/faq", PageController, :index
     get "/plans", PlanController, :index
   end

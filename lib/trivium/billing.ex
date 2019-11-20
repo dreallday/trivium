@@ -1,7 +1,5 @@
 defmodule Trivium.Billing do
-  @moduledoc """
-  The Billing context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Trivium.Repo

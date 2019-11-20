@@ -95,3 +95,12 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+config :trivium, Trivium.Mailer,
+  adapter: Bamboo.LocalAdapter
+# Email & Validation SG
+# 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
+
+# Contact SG
+# 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
+ 

@@ -1,4 +1,5 @@
 defmodule TriviumWeb.DashboardLive.Index do
+  @moduledoc false
   use Phoenix.LiveView
   alias Trivium.Private
   alias Trivium.Billing

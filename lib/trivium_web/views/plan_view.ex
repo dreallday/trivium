@@ -1,4 +1,5 @@
 defmodule TriviumWeb.PlanView do
+  @moduledoc false
   use TriviumWeb, :view
 
   def set_plan(conn, plan) do

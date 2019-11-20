@@ -1,4 +1,5 @@
 defmodule TriviumWeb.ErrorView do
+  @moduledoc false
   use TriviumWeb, :view
 
   # If you want to customize a particular status code

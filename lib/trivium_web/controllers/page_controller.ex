@@ -1,4 +1,5 @@
 defmodule TriviumWeb.PageController do
+  @moduledoc false
   use TriviumWeb, :controller
 
   def index(conn, _params) do

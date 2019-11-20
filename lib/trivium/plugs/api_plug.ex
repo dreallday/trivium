@@ -1,10 +1,11 @@
 defmodule Trivium.Plug.VerifyRequest do
+  @moduledoc false
   import Plug.Conn
   import Ecto.Query, warn: false
   alias Trivium.Tracker.Producer
 
   defmodule IncompleteRequestError do
-    @moduledoc """
+    @doc """
     Error raised when a required field is missing.
     """
 

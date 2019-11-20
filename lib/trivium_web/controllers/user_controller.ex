@@ -1,4 +1,5 @@
 defmodule TriviumWeb.UserController do
+  @moduledoc false
   use TriviumWeb, :controller
 
   # plug :reload_user

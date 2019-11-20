@@ -1,4 +1,5 @@
 defmodule TriviumWeb.ApiView do
+  @moduledoc false
   use TriviumWeb, :view
   alias TriviumWeb.ApiView
 

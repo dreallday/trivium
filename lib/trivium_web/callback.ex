@@ -1,4 +1,5 @@
 defmodule TriviumWeb.Pow.Routes do
+  @moduledoc false
   use Pow.Phoenix.Routes
   alias TriviumWeb.Router.Helpers, as: Routes
 

@@ -1,4 +1,5 @@
 defmodule TriviumWeb.SessionController do
+  @moduledoc false
   use TriviumWeb, :controller
 
   def new(conn, _params) do
@@ -13,20 +14,6 @@ defmodule TriviumWeb.SessionController do
     conn
     |> Pow.Plug.authenticate_user(user_params)
     |> verify_confirmed()
-
-    # |> case do
-    #   {:ok, conn} ->
-    #     conn
-    #     |> put_flash(:info, "Welcome back!")
-    #     |> redirect(to: Routes.dashboard_path(conn, :index))
-
-    #   {:error, conn} ->
-    #     changeset = Pow.Plug.change_user(conn, conn.params["user"])
-
-    #     conn
-    #     |> put_flash(:info, "Invalid email or password")
-    #     |> render("new.html", changeset: changeset)
-    # end
   end
 
   def delete(conn, _params) do
@@ -46,10 +33,17 @@ defmodule TriviumWeb.SessionController do
         |> redirect(to: Routes.dashboard_path(conn, :index))
 
       false ->
+        {:ok, conn} = Pow.Plug.clear_authenticated_user(conn)
+
         conn
-        |> Pow.Plug.clear_authenticated_user()
         # |> put_flash(:info, "Your e-mail address has not been confirmed.")
+        |> put_flash(
+          :info,
+          "Due to limited resources, your e-mail address needs to be confirmed by an administrator."
+        )
         |> redirect(to: Routes.login_path(conn, :new))
+
+        # |> redirect(to: Routes.dashboard_path(conn, :index))
     end
   end
 

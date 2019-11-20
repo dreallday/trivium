@@ -1,4 +1,5 @@
 defmodule Trivium.Users do
+  @moduledoc false
   use Pow.Ecto.Context,
     repo: Trivium.Repo,
     user: Trivium.Users.User
@@ -23,6 +24,6 @@ defmodule Trivium.Users do
   defp preload_plan(nil), do: nil
 
   defp preload_plan(user) do
-    Trivium.Repo.preload(user, [:current_plan, :plan])
+    Trivium.Repo.preload(user, [:current_plan, :plan]) |> IO.inspect(label: "preload_plan clauses")
   end
 end

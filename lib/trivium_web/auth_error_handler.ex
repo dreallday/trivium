@@ -1,4 +1,5 @@
 defmodule TriviumWeb.AuthErrorHandler do
+  @moduledoc false
   use TriviumWeb, :controller
   alias Plug.Conn
 

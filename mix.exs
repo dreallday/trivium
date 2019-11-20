@@ -12,14 +12,18 @@ defmodule Trivium.MixProject do
       aliases: aliases(),
       deps: deps(),
       # Docs
-      name: "App API",
+      name: "Roads API",
       source_url: "https://github.com/dreallday/trivium",
       homepage_url: "http://YOUR_PROJECT_HOMEPAGE",
       docs: [
         # The main page in the docs
         main: "trivium",
-        logo: "assets/static/images/phoenix.png",
-        extras: ["README.md"]
+        logo: "assets/static/images/default-monochrome.svg",
+        extras: ["README.md"],
+        output: "priv/static/doc",
+        # api_reference: false,
+        # main: "trivium",
+        filter_prefix: "Trivium"
       ]
     ]
   end
@@ -56,7 +60,7 @@ defmodule Trivium.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:httpoison, "~> 1.6"},
       {:polyline, "~> 1.2"},
-      {:distillery, "~> 2.1"},
+      {:distillery, "~> 2.1", runtime: false},
       {:gen_stage, "~> 0.14.2"},
       {:flow, "~> 0.14.3"},
       {:ex_rated, "~> 1.3"},
@@ -66,7 +70,8 @@ defmodule Trivium.MixProject do
       {:nebulex, "~> 1.1"},
       {:stripity_stripe, "~> 2.7"},
       {:phoenix_gon, "~> 0.4.0"},
-      {:ex_doc, "~> 0.21.2", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.21.2", only: :dev, runtime: false},
+      {:bamboo, "~> 1.3"}
     ]
   end
 

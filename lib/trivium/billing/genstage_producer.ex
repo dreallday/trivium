@@ -1,4 +1,5 @@
 defmodule Trivium.Tracker.Producer do
+  @moduledoc false
   use GenStage
 
   def start_link(number) do

@@ -1,4 +1,5 @@
 defmodule Trivium.Accounts.LandingUser do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

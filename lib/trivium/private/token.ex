@@ -1,4 +1,5 @@
 defmodule Trivium.Private.Token do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias Trivium.Users.User

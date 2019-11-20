@@ -1,4 +1,5 @@
 defmodule TriviumWeb.StatView do
+  @moduledoc false
   use TriviumWeb, :view
   alias TriviumWeb.StatView
 

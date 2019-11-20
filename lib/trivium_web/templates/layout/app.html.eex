@@ -12,9 +12,9 @@
       <section class="container">
         <nav class="nav-horizontal" role="navigation">
           <ul><li><%= link "Plans", to: Routes.plan_path(@conn, :index) %></li></ul>
-          <ul><li><%= link "Docs", to: Routes.docs_path(@conn, :index) %></li></ul>
+          <ul><li><a href="/docs">Docs</a></li></ul>
           <ul><li><%= link "FAQ", to: Routes.page_path(@conn, :index) %></li></ul>
-          <ul><li><%= link "Contact", to: Routes.page_path(@conn, :index) %></li></ul>
+          <ul><li><%= link "Contact", to: Routes.contact_path(@conn, :index) %></li></ul>
           <ul><li><%= link "About", to: Routes.page_path(@conn, :index) %></li></ul>
           <%= if Pow.Plug.current_user(@conn) do %>
             <ul><li><%= link "Dashboard", to: Routes.dashboard_path(@conn, :index) %></li></ul>
@@ -24,7 +24,7 @@
             <ul><li><%= link "Sign in", to: Routes.login_path(@conn, :new) %></li></ul>
           <% end %>
         </nav>
-        <a href="/" class="phx-logo">
+        <a href="/" class="the-logo">
           <img src="<%= Routes.static_path(@conn, "/images/default-monochrome.svg") %>" alt="Trivium"/>
         </a>
       </section>

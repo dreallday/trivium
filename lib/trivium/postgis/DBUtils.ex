@@ -1,4 +1,5 @@
 defmodule DBUtils do
+  @moduledoc false
   def result_to_map_list(result) do
     case result.__struct__ do
       Postgrex.Result ->

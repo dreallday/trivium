@@ -1,4 +1,5 @@
 defmodule TriviumWeb.Pow.Plug.Token do
+  @moduledoc false
   use Pow.Plug.Base
 
   alias Trivium.Users.User

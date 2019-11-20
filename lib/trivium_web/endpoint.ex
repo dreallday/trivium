@@ -1,4 +1,5 @@
 defmodule TriviumWeb.Endpoint do
+  @moduledoc false
   use Phoenix.Endpoint, otp_app: :trivium
 
   socket "/socket", TriviumWeb.UserSocket,
@@ -15,7 +16,14 @@ defmodule TriviumWeb.Endpoint do
     at: "/",
     from: :trivium,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(html css fonts images js favicon.ico robots.txt)
+
+
+  # plug Plug.Static,
+  #   at: "/docs",
+  #   from: {:trivium, "./doc"},
+  #   gzip: false,
+  #   only: ~w(html css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

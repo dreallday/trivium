@@ -1,4 +1,5 @@
 defmodule TriviumWeb.ChangesetView do
+  @moduledoc false
   use TriviumWeb, :view
 
   @doc """
