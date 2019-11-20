@@ -19,11 +19,11 @@ defmodule Trivium.MixProject do
         # The main page in the docs
         main: "trivium",
         logo: "assets/static/images/default-monochrome.svg",
-        extras: ["README.md"],
-        output: "priv/static/doc",
+        extras: ["README.md"]
+        # output: "priv/static/doc",
         # api_reference: false,
         # main: "trivium",
-        filter_prefix: "Trivium"
+        # filter_prefix: "Trivium"
       ]
     ]
   end
