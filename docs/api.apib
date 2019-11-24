@@ -1,0 +1,144 @@
+FORMAT: 1A
+HOST: https://trivium.gg
+
+# Trivium
+_meeting of three ways, crossroads_
++ [Main](https://trivium.gg)
++ [This Page](https://trivium.gg/docs)
++ [Questions/Concerns](https://trivium.gg/contact)
+
+## (Janky Alpha) Trivium API
+
++ All data is provided by OpenStreetMap
++ If you would like to contribute, please sign up on [OpenStreetMap](https://www.openstreetmap.org/)
+
+# Test [/api/v1/test?key={key}]
+
++ Parameters
+    + key: 8fe77011f770cc87f53f24aae713d8600c352602 (required) - Unique API key
+
+## Authentication Test [GET]
+Test whether API key authentication works, returns single random UUID.
+
++ Response 200 (text/plain)
+
+        144d20b8-38a6-4857-928a-0f583b74797f
+
+# Snap to Road API [/api/v1/snap?key={key}&lat={lat}&lon={lon}]
+
++ Parameters
+    + key: 8fe77011f770cc87f53f24aae713d8600c352602 (required) - Unique API key
+    + lat: 0 (number, required) - Latitude
+    + lon: 0 (number, required) - Longitude
+
+## Snap to Road [GET]
+Returns the closest point on a road from a given input of coordinates
+
++ Response 200 (application/json)
+
+    + Schema
+
+            {
+                "snappedPoints": [
+                        {
+                                "id": 1234,
+                                "location": {
+                                        "latitude": 0,
+                                        "longitude": 0
+                                }
+                        }
+                ]
+             }
+
+
+## Snap to Road [POST]
+Returns the closest point on a road from a given input of coordinates
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + key: 8fe77011f770cc87f53f24aae713d8600c352602 (string)
+        + lat: 0 (number)
+        + lon: 0 (number)
+
+
+    + Schema
+
+            {
+                "snappedPoints": [
+                        {
+                                "id": 1234,
+                                "location": {
+                                        "latitude": 0,
+                                        "longitude": 0
+                                }
+                        }
+                ]
+             }
+
+
+
+
+
+# Speed Limit API [/api/v1/speed?key={key}&lat={lat}&lon={lon}]
+
++ Parameters
+    + key: 8fe77011f770cc87f53f24aae713d8600c352602 (required) - Unique API key
+    + lat: 0 (number, required) - Latitude
+    + lon: 0 (number, required) - Longitude
+
+## Speed Limits [GET]
+Returns the closest point on a road from a given input of coordinates, and the speed limits(if exist) for the given stretch of the road
+
++ Response 200 (application/json)
+
+    + Schema
+
+            {
+                "speedLimits": [
+                        {
+                                "id": 1234,
+                                "speedLimit": 25,
+                                "units": "mph" // "kph"
+                        }
+                ],
+                "snappedPoints": [
+                        {
+                                "id": 1234,
+                                "location": {
+                                        "latitude": 0,
+                                        "longitude": 0
+                                }
+                        }
+                ]
+             }
+
+
+## Speed Limits [POST]
+Returns the closest point on a road from a given input of coordinates, and the speed limits(if exist) for the given stretch of the road
+
++ Response 200 (application/json)
+    + Attributes (object)
+        + key: 8fe77011f770cc87f53f24aae713d8600c352602 (string)
+        + lat: 0 (number)
+        + lon: 0 (number)
+
+    + Schema
+
+            {
+                "speedLimits": [
+                        {
+                                "id": 1234,
+                                "speedLimit": 25,
+                                "units": "mph" // "kph"
+                        }
+                ],
+                "snappedPoints": [
+                        {
+                                "id": 1234,
+                                "location": {
+                                        "latitude": 0,
+                                        "longitude": 0
+                                }
+                        }
+                ]
+             }

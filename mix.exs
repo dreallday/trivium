@@ -83,9 +83,11 @@ defmodule Trivium.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-      "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      "ecto.setup": ["ecto.create -r Trivium.Repo", "ecto.migrate -r Trivium.Repo", "run priv/repo/seeds.exs  -r Trivium.Repo"],
+      "ecto.reset": ["ecto.drop -r Trivium.Repo", "ecto.setup -r Trivium.Repo"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"],
+      migrate: ["ecto.migrate -r Trivium.Repo"],
+      "gen.docs": ["aglio -i docs/api.apib -o docs/index.html"]
     ]
   end
 end
