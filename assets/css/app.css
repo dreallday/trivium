@@ -1,5 +1,5 @@
 /* This file is for your main application css. */
 
-@import "./phoenix.css";
-@import "./super_stripe.css";
+@import "./boss.css";
 @import "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css";
+@import "./super_stripe.css";
