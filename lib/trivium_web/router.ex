@@ -10,7 +10,7 @@ defmodule TriviumWeb.Router do
     forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
-  forward "/docs", Trivium.DocServer
+  # forward "/docs", Trivium.DocServer
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -55,6 +55,7 @@ defmodule TriviumWeb.Router do
     get "/", PageController, :index
     resources "/contact", ContactController, only: [:create, :index]
     get "/about", PageController, :index
+    get "/docs", DocsController, :index
     get "/legal", PageController, :index
     get "/faq", PageController, :index
     get "/plans", PlanController, :index
