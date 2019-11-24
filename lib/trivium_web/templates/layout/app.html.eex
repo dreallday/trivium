@@ -11,11 +11,6 @@
     <header>
       <section class="container">
         <nav class="nav-horizontal" role="navigation">
-          <ul><li><%= link "Plans", to: Routes.plan_path(@conn, :index) %></li></ul>
-          <ul><li><a href="/docs">Docs</a></li></ul>
-          <ul><li><%= link "FAQ", to: Routes.page_path(@conn, :index) %></li></ul>
-          <ul><li><%= link "Contact", to: Routes.contact_path(@conn, :index) %></li></ul>
-          <ul><li><%= link "About", to: Routes.page_path(@conn, :index) %></li></ul>
           <%= if Pow.Plug.current_user(@conn) do %>
             <ul><li><%= link "Dashboard", to: Routes.dashboard_path(@conn, :index) %></li></ul>
             <ul><li><%= link "Sign out", to: Routes.logout_path(@conn, :delete), method: :delete %></li></ul>
