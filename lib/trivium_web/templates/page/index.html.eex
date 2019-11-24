@@ -1,6 +1,5 @@
-<section class="phx-hero">
 
-</section>
+
 <section class="row">
   <article class="column">
     <h3>Resources</h3>
@@ -14,3 +13,18 @@
     <ul><li><%= link "About", to: Routes.page_path(@conn, :index) %></li></ul>
   </article>
 </section>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+  </div>
+</div>
