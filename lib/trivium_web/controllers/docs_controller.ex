@@ -5,6 +5,6 @@ defmodule TriviumWeb.DocsController do
   def index(conn, _params) do
     conn
     |> put_resp_header("content-type", "text/html; charset=utf-8")
-    |> send_file(200, Application.app_dir(:trivium, "priv/static/docs/index.html"))
+    |> send_file(200, Application.app_dir(:trivium, "docs/index.html"))
   end
 end
