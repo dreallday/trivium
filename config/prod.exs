@@ -18,12 +18,22 @@ config :trivium, TriviumWeb.Endpoint,
   secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE"),
   server: true
 
-config :gigalixir_getting_started, Trivium.Repo,
+config :trivium, Trivium.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   ssl: true,
   pool_size: 2 # Free tier db only allows 4 connections. Rolling deploys need pool_size*(n+1) connections where n is the number of app replicas.
 
+
+config :trivium, Trivium.Repo.GIS,
+  username: "psql_main",
+  password: "s3xyb1tch",
+  database: "gis",
+  hostname: "192.168.1.10",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 50,
+  read_only: true,
+  ssl: true
 
 # Do not print debug messages in production
 config :logger, level: :info

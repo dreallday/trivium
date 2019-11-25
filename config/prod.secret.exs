@@ -4,7 +4,7 @@
 # recommended and you have to remember to add this
 # file to your .gitignore.
 use Mix.Config
-
+# postgresql://7131d268-1251-4946-be52-eb445d57daac-user:pw-ce9b1ef6-7109-4729-8a94-16ee0df78569@postgres-free-tier-1.gigalixir.com:5432/7131d268-1251-4946-be52-eb445d57daac
 database_url =
   System.get_env("DATABASE_URL") ||
     raise """

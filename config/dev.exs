@@ -8,7 +8,7 @@ config :trivium, Trivium.Repo,
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
-
+# postgresql://postgres:postgres@localhost:5432/trivium_dev
 # config :trivium, Trivium.Repo.GIS,
 #   username: "psql_readonly",#   username: "psql_main",
 #   password: "postgres",#   password: "s3xyb1tch",
