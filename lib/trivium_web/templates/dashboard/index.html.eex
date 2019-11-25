@@ -3,6 +3,4 @@
 
   <%= render "partials/profile.html", conn: @conn, user: @user %>
   <%= render "partials/tokens.html", conn: @conn, user: @user, tokens: @tokens %>
-  <%= render "partials/payment.html", conn: @conn, user: @user, payment: @payment %>
-  <%= render "partials/subscription.html", conn: @conn, plan: @plan %>
 </div>
