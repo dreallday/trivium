@@ -114,7 +114,11 @@ defmodule Trivium.Billing do
 
   """
   def list_plans do
-    Repo.all(Plan)
+    # Repo.all(Plan)
+    from(p in Plan)
+    |> not_disabled()
+    # |> not_deleted
+    |> Repo.all()
   end
 
   @doc """
@@ -395,5 +399,13 @@ defmodule Trivium.Billing do
 
   def change_payment(%Payment{} = payment) do
     raise "TODO"
+  end
+
+  defp not_deleted(query) do
+    from(q in query, where: is_nil(q.deleted_at))
+  end
+
+  defp not_disabled(query) do
+    from(q in query, where: is_nil(q.disabled_at))
   end
 end

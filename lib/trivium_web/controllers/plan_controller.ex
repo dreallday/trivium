@@ -7,8 +7,9 @@ defmodule TriviumWeb.PlanController do
   alias Trivium.Billing.Plan
 
   def index(conn, _params) do
+    user = Pow.Plug.current_user(conn)
     plans = Billing.list_plans()
-    render(conn, "index.html", plans: plans)
+    render(conn, "index.html", plans: plans, user: user)
   end
 
   def new(conn, _params) do

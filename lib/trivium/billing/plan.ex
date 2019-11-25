@@ -7,6 +7,7 @@ defmodule Trivium.Billing.Plan do
 
   schema "plans" do
     field :name, :string
+    field :description, :string
     field :is_trial, :boolean
     field :trial_begins_at, :naive_datetime
     field :trial_ends_at, :naive_datetime
@@ -19,6 +20,7 @@ defmodule Trivium.Billing.Plan do
     field :request_limit_interval, :integer
     field :request_per_day, :integer
     has_many(:users, Trivium.Users.User, foreign_key: :id)
+    field :disabled_at, :naive_datetime
 
     timestamps()
   end

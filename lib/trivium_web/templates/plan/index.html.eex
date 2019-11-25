@@ -1,30 +1,33 @@
-<h1>Available Subscription Plans</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>requests/day</th>
-      <th>requests/sec</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for plan <- @plans do %>
-    <tr>
-      <td><%= plan.name %></td>
-      <td>$<%= plan.price / 100 %>/month</td>
-      <td><%= plan.request_per_day %></td>
-      <td><%= plan.request_limit / plan.request_limit_interval %></td>
-      <td>
-      <%= if Pow.Plug.current_user(@conn) do %>
-        <span><%= link "Select", to: Routes.plan_path(@conn, :update_plan_for_user, plan.id), method: :post %></span>
-      <% else %>
-      <% end %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+<div class="container">
+  <div class="row">
+    <h1>Available Plans</h1>
+  </div>
+  <div class="row">
+    <%= for plan <- @plans do %>
+    <div class="col-sm-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= plan.name %></h5>
+          <p class="card-text"><%= plan.description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">$<%= plan.price / 100 %>/month</li>
+          <li class="list-group-item"><%= plan.request_per_day %> requests/day</li>
+          <li class="list-group-item"><%= plan.request_limit / plan.request_limit_interval %> requests/sec</li>
+        </ul>
+        <%= if Pow.Plug.current_user(@conn) do %>
+          <%= if @user.current_plan != plan.id do %>
+          <div class="card-body">
+            <%= link "Select", to: Routes.plan_path(@conn, :update_plan_for_user, plan.id), method: :post, class: "card-link" %>
+          </div>
+          <% else %>
+            <div class="card-body">
+              <a href="#" class="card-link">Current Plan</a>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>

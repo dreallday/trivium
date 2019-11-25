@@ -6,6 +6,7 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
     create table(:plans, primary_key: false) do
       add(:id, :binary_id, primary_key: true)
       add(:name, :string)
+      add(:description, :text)
       add(:is_trial, :boolean, default: false)
       add(:trial_begins_at, :naive_datetime)
       add(:trial_ends_at, :naive_datetime)
@@ -16,6 +17,7 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
       add(:request_limit_interval, :integer)
       add(:request_per_day, :integer)
       add(:user_limit, :integer, default: -1)
+      add(:disabled_at, :naive_datetime)
 
       timestamps()
     end
