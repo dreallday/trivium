@@ -37,6 +37,10 @@ config :trivium, Trivium.Repo.GIS,
 # Do not print debug messages in production
 config :logger, level: :info
 
+
+config :trivium, Trivium.Mailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: "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"
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
