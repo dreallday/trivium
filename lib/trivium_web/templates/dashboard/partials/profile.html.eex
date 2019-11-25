@@ -1,0 +1,26 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Password</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span><%= @user.name %></span>
+      </td>
+      <td>
+        <span><%= @user.email %></span>
+      </td>
+      <td>
+        <span><%= "••••••••" %></span>
+      </td>
+      <td>
+        <span><%= link "Edit", to: Routes.user_path(@conn, :show, @user.id) %></span>
+      </td>
+    </tr>
+  </tbody>
+</table>

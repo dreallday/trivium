@@ -1,30 +1,34 @@
-<h1>Edit profile</h1>
+<div class="container">
+  <h1>Edit profile</h1>
 
-<%= form_for @changeset, @action, [as: :user], fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+  <%= form_for @changeset, @action, [as: :user], fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= label f, :current_password %>
+      <%= password_input f, :current_password, [class: "form-control"] %>
+      <%= error_tag f, :current_password, [class: "form-text text-muted"] %>
+    </div>
+    <div class="form-group">
+      <%= label f, Pow.Ecto.Schema.user_id_field(@changeset) %>
+      <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset), [class: "form-control"] %>
+      <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset), [class: "form-text text-muted"] %>
+    </div>
+    <div class="form-group">
+      <%= label f, :password %>
+      <%= password_input f, :password, [class: "form-control"] %>
+      <%= error_tag f, :password, [class: "form-text text-muted"] %>
+    </div>
+    <div class="form-group">
+      <%= label f, :confirm_password %>
+      <%= password_input f, :confirm_password, [class: "form-control"] %>
+      <%= error_tag f, :confirm_password, [class: "form-text text-muted"] %>
+    </div>
+    <div>
+      <%= submit "Update", class: "btn btn-primary" %>
     </div>
   <% end %>
-
-  <%= label f, :current_password %>
-  <%= password_input f, :current_password %>
-  <%= error_tag f, :current_password %>
-
-  <%= label f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-  <%= text_input f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-  <%= error_tag f, Pow.Ecto.Schema.user_id_field(@changeset) %>
-
-  <%= label f, :password %>
-  <%= password_input f, :password %>
-  <%= error_tag f, :password %>
-
-  <%= label f, :confirm_password %>
-  <%= password_input f, :confirm_password %>
-  <%= error_tag f, :confirm_password %>
-
-  <div>
-    <%= submit "Update" %>
-  </div>
-<% end %>
-
+</div>

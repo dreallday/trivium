@@ -1,59 +1,8 @@
-<h1>Dashboard</h1>
+<div class="container">
+  <h1>Dashboard</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <span><%= @user.name %></span>
-      </td>
-      <td>
-        <span><%= @user.email %></span>
-      </td>
-      <td>
-        <span><%= "••••••••" %></span>
-      </td>
-      <td>
-        <span><%= link "Edit", to: Routes.user_path(@conn, :show, @user.id) %></span>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table>
-  <thead>
-    <tr>
-      <th>API Keys</th>
-      <th></th>
-
-    </tr>
-  </thead>
-  <tbody>
-    <%= for tk <- @tokens do %>
-        <tr>
-          <td><%= tk.token %></td>
-          <td>
-            <%= form_for @conn, Routes.tokens_path(@conn, :delete, tk.id), [method: :delete], fn f -> %>
-              <%= button("Delete", to: Routes.tokens_path(@conn, :delete, tk.id), method: :delete) %>
-            <% end %>
-          </td>
-        </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<span>
-  <%= form_for @conn, Routes.tokens_path(@conn, :create, @user.id), [method: :post], fn f -> %>
-    <%= button("New API Token", to: Routes.tokens_path(@conn, :create, @user.id), method: :post, class: "btn") %>
-  <% end %>
-</span>
-
-<%= render "partials/payment.html", conn: @conn, user: @user, payment: @payment %>
-<%= render "partials/subscription.html", conn: @conn, plan: @plan %>
+  <%= render "partials/profile.html", conn: @conn, user: @user %>
+  <%= render "partials/tokens.html", conn: @conn, user: @user, tokens: @tokens %>
+  <%= render "partials/payment.html", conn: @conn, user: @user, payment: @payment %>
+  <%= render "partials/subscription.html", conn: @conn, plan: @plan %>
+</div>

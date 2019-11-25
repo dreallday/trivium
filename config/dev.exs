@@ -18,10 +18,10 @@ config :trivium, Trivium.Repo,
 #   pool_size: 50
 
 config :trivium, Trivium.Repo.GIS,
-  username: "postgres_readonly",
-  password: "postgres",
+  username: "psql_main",
+  password: "s3xyb1tch",
   database: "gis",
-  hostname: "localhost",
+  hostname: "192.168.1.10",
   show_sensitive_data_on_connection_error: true,
   pool_size: 50,
   read_only: true

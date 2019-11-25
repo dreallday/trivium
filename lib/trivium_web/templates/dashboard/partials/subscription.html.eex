@@ -1,7 +1,7 @@
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Subscription</th>
+      <th scope="col">Subscription</th>
     </tr>
   </thead>
   <tbody>
