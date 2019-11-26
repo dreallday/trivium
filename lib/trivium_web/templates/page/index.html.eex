@@ -4,4 +4,5 @@
   <p class="lead">Speed Limits and Map Matching API</p>
   <hr class="my-4">
   <p>Give us your lat/lon, we give you back a better lat/lon with speedlimits, and snap to road!</p>
+  <small>Janky Alpha for North America only</small>
 </div>
