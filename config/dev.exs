@@ -21,7 +21,7 @@ config :trivium, Trivium.Repo.GIS,
   username: "psql_main",
   password: "s3xyb1tch",
   database: "gis",
-  hostname: "192.168.1.10",
+  hostname: "73.237.180.153",
   show_sensitive_data_on_connection_error: true,
   pool_size: 50,
   read_only: true

@@ -1,11 +1,17 @@
-<h1>Contact</h1>
+<div class="container">
+  <h1>Contact</h1>
 
-<%= form_for @conn, Routes.contact_path(@conn, :create), fn f -> %>
-  <%= label f, :your_email %>
-  <%= text_input f, :email %>
-  <br>
-  <%= label f, :message %>
-  <%= textarea f, :message, rows: "3" %>
-  <br>
-  <%= submit "Send Message" %>
-<% end %>
+  <%= form_for @conn, Routes.contact_path(@conn, :create), fn f -> %>
+  <div class="form-group">
+    <%= label f, :your_email %>
+    <%= text_input f, :email, [class: "form-control"] %>
+    <br>
+  </div>
+  <div class="form-group">
+    <%= label f, :message %>
+    <%= textarea f, :message, [class: "form-control", rows: "3"] %>
+    <br>
+  </div>
+    <%= submit "Send Message", class: "btn btn-primary" %>
+  <% end %>
+</div>
