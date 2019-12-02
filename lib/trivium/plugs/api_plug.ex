@@ -20,7 +20,7 @@ defmodule Trivium.Plug.VerifyRequest do
       ) do
     key = params["key"]
 
-    case Trivium.Verify.verify(key) do
+    case Trivium.KeyVerify.verify(key) do
       {:ok, :exists} ->
         # {:ok, pid} = Tracker.start()
         # Tracker.save(pid, %{request_path: request_path, key: key})

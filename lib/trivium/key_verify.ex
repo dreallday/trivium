@@ -1,4 +1,4 @@
-defmodule Trivium.Verify do
+defmodule Trivium.KeyVerify do
   @moduledoc false
   use GenServer
 
@@ -26,9 +26,9 @@ defmodule Trivium.Verify do
 
   def handle_call({:sync_verify, key}, _from, state) do
     # new_state = f(state, args)
-    response = verify_request!(key)
+    # response = verify_request!(key)
     # |> IO.inspect(label: "genserver key")
-    {:reply, response, state}
+    {:reply, verify_request!(key), state}
   end
 
   defp verify_request!(key) do
