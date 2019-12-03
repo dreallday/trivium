@@ -22,4 +22,5 @@
   <% end %>
 
   <span>Don't have an account? <%= link "Register", to: Routes.signup_path(@conn, :new) %></span>
+  <span><%= link("Reset password", to: Routes.reset_password_path(@conn, :new)) %></span>
 <div>

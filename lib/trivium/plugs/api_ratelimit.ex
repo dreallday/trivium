@@ -8,6 +8,7 @@ defmodule Trivium.Plug.RateLimit do
 
   def call(conn, options \\ []) do
     # bucket_name(conn) |> IO.inspect(label: "bucket_name")
+    Pow.Plug.current_user(conn) |> IO.inspect(label: "pow current user")
 
     case check_rate(conn, options) do
       # Do nothing, allow execution to continue
@@ -19,7 +20,12 @@ defmodule Trivium.Plug.RateLimit do
   defp check_rate(conn, options) do
     interval_milliseconds = options[:interval_seconds] * 1000
     max_requests = options[:max_requests]
+
+    bucket_name(conn) |> IO.inspect(label: "bucket name")
+
     ExRated.check_rate(bucket_name(conn), interval_milliseconds, max_requests)
+    |> IO.inspect(label: "bucket")
+
     # ExRated.check_rate(conn.params["key"], interval_milliseconds, max_requests)
   end
 
