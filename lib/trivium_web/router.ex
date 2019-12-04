@@ -3,8 +3,8 @@ defmodule TriviumWeb.Router do
   use TriviumWeb, :router
   use Pow.Phoenix.Router
 
-  # use Pow.Extension.Phoenix.Router,
-  #   extensions: [PowResetPassword, PowEmailConfirmation]
+  use Pow.Extension.Phoenix.Router,
+    extensions: [PowResetPassword, PowEmailConfirmation]
 
   # use Pow.Extension.Phoenix.Router, otp_app: :trivium
 

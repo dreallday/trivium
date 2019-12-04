@@ -24,6 +24,7 @@ defmodule TriviumWeb.ResetPasswordController do
 
         conn
         |> PowResetPassword.Plug.assign_reset_password_user(user)
+        |> IO.inspect(label: "fuckkkk you")
         |> render("edit.html", changeset: changeset, id: id)
     end
   end
@@ -42,15 +43,34 @@ defmodule TriviumWeb.ResetPasswordController do
 
       {:error, _changeset, conn} ->
         conn
-        |> put_flash(:info, 'Check your email to reset password')
+        |> put_flash(:info, 'Check your email to reset password!')
         |> redirect(to: Routes.reset_password_path(conn, :new))
     end
   end
 
-  def update(conn, %{"user" => user_params}) do
-    conn.assigns |> IO.inspect(label: "user params from update")
-    PowResetPassword.Plug.update_user_password(conn, user_params) |> IO.inspect(label: "fuck you")
-    # # {:ok, conn} = Pow.Plug.clear_authenticated_user(conn)
-    redirect(conn, to: Routes.login_path(conn, :new))
+  def update(conn, %{"user" => user_params} = params) do
+    params |> IO.inspect(label: "params from update")
+
+    case PowResetPassword.Plug.user_from_token(conn, params["id"]) do
+      nil ->
+        conn
+        |> put_flash(:error, "invalid token")
+        |> redirect(to: Routes.reset_password_path(conn, :new))
+        |> halt()
+
+      user ->
+        conn
+        |> PowResetPassword.Plug.assign_reset_password_user(user)
+        |> PowResetPassword.Plug.update_user_password(user_params)
+        |> case do
+          {:ok, _user, conn} ->
+            redirect(conn, to: Routes.login_path(conn, :new))
+
+          {:error, _changeset, conn} ->
+            conn
+            |> put_flash(:error, "Try Again")
+            |> redirect(to: Routes.reset_password_path(conn, :new))
+        end
+    end
   end
 end
