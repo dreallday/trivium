@@ -393,6 +393,10 @@ defmodule Trivium.Billing do
     end
   end
 
+  def get_default_plan() do
+    Repo.get_by(Plan, default: true, is_trial: true)
+  end
+
   def delete_payment(%Payment{} = payment) do
     raise "TODO"
   end

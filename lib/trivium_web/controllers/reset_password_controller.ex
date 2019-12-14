@@ -16,15 +16,12 @@ defmodule TriviumWeb.ResetPasswordController do
         |> halt()
 
       user ->
-        changeset =
-          PowResetPassword.Plug.change_user(conn)
-          |> IO.inspect(label: "change_user changeset")
+        changeset = PowResetPassword.Plug.change_user(conn)
 
         user |> IO.inspect(label: "user email")
 
         conn
         |> PowResetPassword.Plug.assign_reset_password_user(user)
-        |> IO.inspect(label: "fuckkkk you")
         |> render("edit.html", changeset: changeset, id: id)
     end
   end
@@ -33,9 +30,21 @@ defmodule TriviumWeb.ResetPasswordController do
     conn
     |> PowResetPassword.Plug.create_reset_token(user_params)
     |> case do
-      {:ok, %{token: token, user: _user}, conn} ->
+      {:ok, %{token: token, user: user}, conn} ->
         # Send e-mail
         token |> IO.inspect(label: "reset token")
+
+        # Trivium.PowMailer.cast(%{
+        #   user: user,
+        #   subject: "Password Reset",
+        #   text: "https://trivium.gg/forgot/#{token}",
+        #   html: "<a href='https://trivium.gg/forgot/#{token}'>Reset Password</a>"
+        # })
+        Trivium.PowMailer.password_reset(%{
+          user: user,
+          reset_token: token
+        })
+        |> Trivium.PowMailer.process()
 
         conn
         |> put_flash(:info, 'Check your email to reset password')

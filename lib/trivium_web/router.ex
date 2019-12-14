@@ -3,8 +3,8 @@ defmodule TriviumWeb.Router do
   use TriviumWeb, :router
   use Pow.Phoenix.Router
 
-  use Pow.Extension.Phoenix.Router,
-    extensions: [PowResetPassword, PowEmailConfirmation]
+  # use Pow.Extension.Phoenix.Router,
+  #   extensions: [PowResetPassword, PowEmailConfirmation]
 
   # use Pow.Extension.Phoenix.Router, otp_app: :trivium
 
@@ -30,10 +30,7 @@ defmodule TriviumWeb.Router do
 
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
-      # error_handler: Pow.Phoenix.PlugErrorHandler
       error_handler: TriviumWeb.AuthErrorHandler
-
-    # error_handler: TriviumWeb.AuthErrorHandler
   end
 
   pipeline :not_authenticated do
@@ -43,8 +40,8 @@ defmodule TriviumWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    # plug Trivium.Plug.VerifyRequest
     plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
-    plug Trivium.Plug.VerifyRequest
   end
 
   # scope "/" do
@@ -70,6 +67,7 @@ defmodule TriviumWeb.Router do
 
     get "/signup", RegistrationController, :new, as: :signup
     post "/signup", RegistrationController, :create, as: :signup
+    post "/activate/account/:uuid", RegistrationController, :create, as: :signup
     get "/login", SessionController, :new, as: :login
     post "/login", SessionController, :create, as: :login
     get "/forgot", ResetPasswordController, :new, as: :reset_password
