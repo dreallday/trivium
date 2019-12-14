@@ -12,6 +12,7 @@ defmodule Trivium.Billing.Plan do
     field :trial_begins_at, :naive_datetime
     field :trial_ends_at, :naive_datetime
     # Stripe API Plan ID
+    field :default, :boolean
     field :plan_id, :string
     field :price, :integer
     field :price_per_call, :integer

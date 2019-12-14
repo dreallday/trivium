@@ -8,6 +8,7 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
       add(:name, :string)
       add(:description, :text)
       add(:is_trial, :boolean, default: false)
+      add(:default, :boolean, default: false)
       add(:trial_begins_at, :naive_datetime)
       add(:trial_ends_at, :naive_datetime)
       add(:plan_id, :string, comment: "Stripe Plan ID")
@@ -17,8 +18,8 @@ defmodule Trivium.Repo.Migrations.CreateUsers do
       add(:request_limit_interval, :integer)
       add(:request_per_day, :integer)
       add(:user_limit, :integer, default: -1)
-      add(:disabled_at, :naive_datetime)
 
+      add(:disabled_at, :naive_datetime)
       timestamps()
     end
 

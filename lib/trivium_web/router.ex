@@ -2,6 +2,10 @@ defmodule TriviumWeb.Router do
   @moduledoc false
   use TriviumWeb, :router
   use Pow.Phoenix.Router
+
+  # use Pow.Extension.Phoenix.Router,
+  #   extensions: [PowResetPassword, PowEmailConfirmation]
+
   # use Pow.Extension.Phoenix.Router, otp_app: :trivium
 
   # plug(Plug.Static, at: "/", from: :trivium)
@@ -26,10 +30,7 @@ defmodule TriviumWeb.Router do
 
   pipeline :protected do
     plug Pow.Plug.RequireAuthenticated,
-      # error_handler: Pow.Phoenix.PlugErrorHandler
       error_handler: TriviumWeb.AuthErrorHandler
-
-    # error_handler: TriviumWeb.AuthErrorHandler
   end
 
   pipeline :not_authenticated do
@@ -39,12 +40,12 @@ defmodule TriviumWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    # plug Trivium.Plug.VerifyRequest
     plug Trivium.Plug.RateLimit, %{interval_seconds: 1, max_requests: 5}
-    plug Trivium.Plug.VerifyRequest
   end
 
   # scope "/" do
-  #   pipe_through [:browser, :not_authenticated]
+  #   pipe_through :browser
   #   # pow_routes()
   #   pow_extension_routes()
   # end
@@ -66,8 +67,15 @@ defmodule TriviumWeb.Router do
 
     get "/signup", RegistrationController, :new, as: :signup
     post "/signup", RegistrationController, :create, as: :signup
+    post "/activate/account/:uuid", RegistrationController, :create, as: :signup
     get "/login", SessionController, :new, as: :login
     post "/login", SessionController, :create, as: :login
+    get "/forgot", ResetPasswordController, :new, as: :reset_password
+    post "/forgot", ResetPasswordController, :create, as: :reset_password
+    get "/forgot/:id", ResetPasswordController, :edit, as: :reset_password
+    post "/forgot/:id", ResetPasswordController, :update, as: :reset_password
+    put "/forgot/:id", ResetPasswordController, :update, as: :reset_password
+    patch "/forgot/:id", ResetPasswordController, :update, as: :reset_password
   end
 
   scope "/", TriviumWeb do

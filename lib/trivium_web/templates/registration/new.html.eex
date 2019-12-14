@@ -25,9 +25,6 @@
       <%= label f, :confirm_password %>
       <%= password_input f, :confirm_password, [class: "form-control"] %>
       <%= error_tag f, :confirm_password, [class: "form-text text-muted"] %>
-      <small id="passwordHelpBlock" class="form-text text-muted">
-        ~
-      </small>
     </div>
     <%= submit "Register", class: "btn btn-primary" %>
   <% end %>

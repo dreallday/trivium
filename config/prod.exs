@@ -38,7 +38,7 @@ config :trivium, Trivium.Repo.GIS,
 config :logger, level: :info
 
 
-config :trivium, Trivium.Mailer,
+config :trivium, Trivium.PowMailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: "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"
 # ## SSL Support

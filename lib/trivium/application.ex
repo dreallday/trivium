@@ -13,7 +13,7 @@ defmodule Trivium.Application do
       Trivium.Repo.GIS,
       # Start the endpoint when the application starts
       TriviumWeb.Endpoint,
-      {Trivium.Verify, [[name: Trivium.Verify]]},
+      {Trivium.KeyVerify, [[name: Trivium.KeyVerify]]},
       {Trivium.Cache, []},
       {Trivium.Tracker, []},
       {Trivium.Tracker.Producer, :ok},

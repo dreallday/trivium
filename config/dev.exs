@@ -8,6 +8,7 @@ config :trivium, Trivium.Repo,
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
 # postgresql://postgres:postgres@localhost:5432/trivium_dev
 # config :trivium, Trivium.Repo.GIS,
 #   username: "psql_readonly",#   username: "psql_main",
@@ -25,7 +26,7 @@ config :trivium, Trivium.Repo.GIS,
   show_sensitive_data_on_connection_error: true,
   pool_size: 50,
   read_only: true
-  
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -96,11 +97,12 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-config :trivium, Trivium.Mailer,
-  adapter: Bamboo.LocalAdapter
-# Email & Validation SG
-# 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
+config :trivium, Trivium.PowMailer,
+  # adapter: Bamboo.LocalAdapter
+  # Email & Validation SG / PROD
+  # "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"
+  adapter: Bamboo.SendGridAdapter,
+  api_key: "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"
 
 # Contact SG
-# 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
- 
+# "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"

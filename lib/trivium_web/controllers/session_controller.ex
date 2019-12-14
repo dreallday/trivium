@@ -55,13 +55,13 @@ defmodule TriviumWeb.SessionController do
     |> render("new.html", changeset: changeset)
   end
 
-  defp email_confirmed?(%{
-         email_confirmed_at: nil,
-         email_confirmation_token: token,
-         unconfirmed_email: nil
-       })
-       when not is_nil(token),
-       do: false
+  # defp email_confirmed?(%{
+  #        email_confirmed_at: nil,
+  #        email_confirmation_token: token,
+  #        unconfirmed_email: nil
+  #      })
+  #      when not is_nil(token),
+  #      do: false
 
   defp email_confirmed?(_user), do: true
 end

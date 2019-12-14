@@ -23,6 +23,7 @@ trial_plan =
     name: "Trial",
     price: 0,
     is_trial: true,
+    default: true,
     price_per_call: 0,
     request_limit: 1,
     request_limit_interval: 1,
